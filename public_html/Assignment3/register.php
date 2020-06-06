@@ -7,7 +7,6 @@
 	</label>
 	<label for = "cp">Confirm Password
 	<input type="password" id="cp" name="cpassword"/>
-	<input type="submit" name="register" value="Register"/>
 	</label>
 	<input type ="submit" name="register" value="Register"/> 
 </form>
