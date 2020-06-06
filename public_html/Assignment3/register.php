@@ -23,7 +23,7 @@ if(isset($_POST["register"])){
 				echo "<div>Passwords Match</div>";
 			}
 			else{
-				echo"<div>Passwords Do Not Match</div>";
+				echo "<div>Passwords Do Not Match</div>";
 			}
 			
 		}
