@@ -1,9 +1,9 @@
 <form method = "POST">
 	<label for="email">Email
-	<input type="email" id="email" name="email" autocomplete="off"/>
+	<input type="email" id="email" name="email"/>
 	</label>
 	<label for="p">Password
-	<input type="password" id="p" name="password" autocomplete="off"/>
+	<input type="password" id="p" name="password" />
 	</label>
 	<label for = "cp">Confirm Password
 	<input type="password" id="cp" name="cpassword"/>
@@ -22,7 +22,7 @@ if(isset($_POST["password"]) && isset($_POST["cpassword"]) && isset($_POST["emai
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 			try{
 				$db = new PDO($connection_string, $dbuser, $dbpass);
-				$stmt = $db->prepare("INSERT INTO Users (email, password, VALUES(:email, :password)");
+				$stmt = $db->prepare("INSERT INTO Users (email, password) VALUES(:email, :password)");
 				$stmt->execute(array(
 					":email" => $email,
 					":password" => $password
