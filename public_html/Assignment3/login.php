@@ -45,7 +45,6 @@ if(isset($_POST["password"]) && isset($_POST["email"])){
 			catch (Exception $e){
 				echo $e->getMessage();
 			}
-		}
 		else{
 			echo "<div>Password Do Not Match</div>";
 		}
