@@ -16,6 +16,7 @@ if(isset($_POST["register"])){
 if(isset($_POST["password"]) && isset($_POST["cpassword"]) && isset($_POST["email"])){
 		$password = $_POST["password"];
 		$cpassword = $_POST["cpassword"];
+		$email = $_POST["email"];
 		if($password == $cpassword){
 			//echo "<div>Password Match</div>";
 			require("config.php");
