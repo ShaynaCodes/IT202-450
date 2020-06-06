@@ -12,17 +12,16 @@
 </form>
 
 <?php
-/*if(isset($_POST["register"])){
-		if(isset($_POST["password"]) && isset($_POST["cpassword"])){
-			$password = $_POST["password"];
-			$cpassword = $_POST["cpassword"];
-			if($password == $cpassword{
-				echo "<div>Passwords Match</div>";
-			}
-			else{
-				echo "<div>Passwords Do Not Match</div>";
-			}
-			
+if(isset($_POST["register"])){
+	if(isset($_POST["password"]) && isset($_POST["cpassword"])){
+		$password = $_POST["password"];
+		$cpassword = $_POST["cpassword"];
+		if($password == $cpassword){
+			echo "<div>Password Match</div>";
 		}
-}*/
+		else{
+			echo "<div>Password Do Not Match</div>";
+		}
+	}
+}
 ?>
