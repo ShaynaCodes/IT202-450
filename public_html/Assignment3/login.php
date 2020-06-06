@@ -30,7 +30,7 @@ if(isset($_POST["password"]) && isset($_POST["email"])){
 						if($result){
 							$rpassword = $result["password"];
 							if($password_verify($password, $rpassword)){
-								echo "<div>Passwords Match! You are logged in!</div>"
+								echo "<div>Passwords Match! You are logged in!</div>";
 							}
 							else{
 								echo "<div>Invalid Password</div>";
@@ -39,9 +39,9 @@ if(isset($_POST["password"]) && isset($_POST["email"])){
 						else{
 							echo "<div>Invalid User</div>";
 						}
-						//echo "<div>Successfully registered!</div>";
 					}
 				}
+
 			catch (Exception $e){
 				echo $e->getMessage();
 			}
