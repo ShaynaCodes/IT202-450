@@ -1,5 +1,5 @@
 <head>
-	<title>Shayna's Site</head>
+	<title>Shayna's Site</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <?php
