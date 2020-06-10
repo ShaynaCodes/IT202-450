@@ -1,4 +1,4 @@
-input{
+background-color{
 	bodyground-color:#FFF0F5
 }
 h1{
@@ -6,10 +6,4 @@ h1{
 }
 p{
 	color:black
-}
-form{
-	width:80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 11%;
 }
