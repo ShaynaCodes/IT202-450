@@ -1,3 +1,7 @@
+<?php
+include("header.php");
+?>
+<h3>Login</h3>
 <form method="POST">
 	<label for="email">Email
 	<input type="email" id="email" name="email" autocomplete="off" />
@@ -9,6 +13,7 @@
 </form>
 
 <?php
+
 //echo var_export($_GET, true);
 //echo var_export($_POST, true);
 //echo var_export($_REQUEST, true);
