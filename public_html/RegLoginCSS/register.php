@@ -3,14 +3,14 @@ include("header.php");
 ?>
 <h3>Register</h3>
 <form method = "POST">
-	<label for="email">Email
-	<input type="email" id="email" name="email"/>
+	<label for="email">Email:<br>
+	<input type="email" id="email" name="email"/><br>
 	</label>
-	<label for="p">Password
-	<input type="password" id="p" name="password" />
+	<label for="p">Password:<br>
+	<input type="password" id="p" name="password" /><br>
 	</label>
-	<label for = "cp">Confirm Password
-	<input type="password" id="cp" name="cpassword"/>
+	<label for = "cp">Confirm Password:<br>
+	<input type="password" id="cp" name="cpassword"/><br>
 	</label>
 	<input type ="submit" name="register" value="Register"/> 
 </form>
