@@ -3,10 +3,10 @@ include("header.php");
 ?>
 <h3>Login</h3>
 <form method="POST">
-	<label for="email">Email
+	<label for="email">Email:<br>
 	<input type="email" id="email" name="email" autocomplete="off" />
 	</label><br>
-	<label for="p">Password
+	<label for="p">Password: <br>
 	<input type="password" id="p" name="password" autocomplete="off"/>
 	</label><br>
 	<input type="submit" name="login" value="Login"/>
