@@ -5,10 +5,10 @@ include("header.php");
 <form method="POST">
 	<label for="email">Email
 	<input type="email" id="email" name="email" autocomplete="off" />
-	</label>
+	</label><br>
 	<label for="p">Password
 	<input type="password" id="p" name="password" autocomplete="off"/>
-	</label>
+	</label><br>
 	<input type="submit" name="login" value="Login"/>
 </form>
 
