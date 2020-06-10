@@ -33,7 +33,8 @@ div {
   padding: 20px;
 }
 </style>
-<h3>Register</h3>
+<h3><center>Register</center></h3>
+<div>
 <form method = "POST">
 	<label for="email">Email:<br>
 	<input type="email" id="email" name="email"/><br>
@@ -46,7 +47,7 @@ div {
 	</label>
 	<input type ="submit" name="register" value="Register"/> 
 </form>
-
+</div>
 <?php
 if(isset($_POST["register"])){
 if(isset($_POST["password"]) && isset($_POST["cpassword"]) && isset($_POST["email"])){
