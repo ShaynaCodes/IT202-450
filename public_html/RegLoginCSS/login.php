@@ -37,10 +37,10 @@ div {
 <div>
 <form method="POST">
 	<label for="email">Email:<br>
-	<input type="email" id="email" name="email" autocomplete="off" />
+	<input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br>
 	</label><br>
 	<label for="p">Password: <br>
-	<input type="password" id="p" name="password" autocomplete="off"/>
+	<input type="password" id="p" name="password" autocomplete="off" required>
 	</label><br>
 	<input type="submit" name="login" value="Login"/>
 </form>
