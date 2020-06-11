@@ -32,6 +32,7 @@ div {
   background-color: #FFF0F5;
   padding: 20px;
 }
+</style>
 <h3><center><font size="24" color="#581845">Login</font></center></h3>
 <div>
 <form method="POST">
