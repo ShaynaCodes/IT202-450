@@ -33,7 +33,7 @@ div {
   padding: 20px;
 }
 </style>
-<h3><center>Register</center></h3>
+<h3><center><font size="24" color="#581845">Register</font></center></h3>
 <div>
 <form method = "POST">
 	<label for="email">Email:<br>

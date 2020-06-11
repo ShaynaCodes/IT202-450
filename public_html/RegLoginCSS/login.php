@@ -1,7 +1,39 @@
 <?php
 include("header.php");
 ?>
-<h3>Login</h3>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #581845;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #4B113A;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #FFF0F5;
+  padding: 20px;
+}
+<h3><center><font size="24" color="#581845">Login</font></center></h3>
+<div>
 <form method="POST">
 	<label for="email">Email:<br>
 	<input type="email" id="email" name="email" autocomplete="off" />
@@ -11,7 +43,7 @@ include("header.php");
 	</label><br>
 	<input type="submit" name="login" value="Login"/>
 </form>
-
+</div>
 <?php
 
 //echo var_export($_GET, true);
