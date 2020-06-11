@@ -1,5 +1,5 @@
 <head>
-	//<title>Shayna's Site</title>
+	<title>Shayna's Site</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -12,7 +12,7 @@ body {
 
 .header {
   overflow: hidden;
- background-color: #f1f1f1;
+ background-color: #FFF0F5;
   padding: 20px 10px;
 }
 
