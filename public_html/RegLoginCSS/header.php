@@ -1,5 +1,5 @@
 <head>
-//	<title>Shayna's Site</title>
+	//<title>Shayna's Site</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -64,7 +64,7 @@ require("config.php");
 session_start();
 ?>
 <div class="header">
-	<a href="login.php" class="logo">Shayna's Site</a>
+	<a href="home.php" class="logo">Shayna's Site</a>
 	<div class="header-right">
     <a href="login.php">Login</a>
     <a href="register.php">Register</a>
