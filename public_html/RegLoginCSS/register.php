@@ -37,13 +37,13 @@ div {
 <div>
 <form method = "POST">
 	<label for="email">Email:<br>
-	<input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required><br>
+	<input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Must Enter an Email"  required><br>
 	</label>
 	<label for="p">Password:<br>
-	<input type="password" id="p" name="password" required><br>
+	<input type="password" id="p" name="password" title="Must Enter a password" required><br>
 	</label>
 	<label for = "cp">Confirm Password:<br>
-	<input type="password" id="cp" name="cpassword" required><br>
+	<input type="password" id="cp" name="cpassword" title="Must Enter a password" required><br>
 	</label>
 	<input type ="submit" name="register" value="Register"/> 
 </form>
