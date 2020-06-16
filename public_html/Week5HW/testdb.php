@@ -28,12 +28,12 @@ else{
 	<label for="survey">Survey Name
 	<input type="text" id="survey" name="name" value="<?php echo get($result, "name");?>" />
 	</label>
-	<label for="q">Title
-	<input type="number" id="t" name="title" value="<?php echo get($result, "title");?>" />
+	<label for="q">Survey Number
+	<input type="number" id="n" name="sn" value="<?php echo get($result, "sn");?>" />
 	</label>
     <?php if($surveyId > 0):?>
 	    <input type="submit" name="updated" value="Update Survey"/>
-    <?php elseif ($Id < 0):?>
+    <?php elseif ($surveyId < 0):?>
         <input type="submit" name="created" value="Create Survey"/>
     <?php endif;?>
 </form>
@@ -41,22 +41,22 @@ else{
 <?php
 if(isset($_POST["updated"]) || isset($_POST["created"])){
     $name = $_POST["name"];
-    $title = $_POST["title"];
-    if(!empty($name) && !empty($title)){
+    $sn = $_POST["sn"];
+    if(!empty($name) && !empty($sn)){
         try{
             if($surveyId > 0) {
-                $stmt = $db->prepare("UPDATE Survey set name = :name, title=:title where id=:id");
+                $stmt = $db->prepare("UPDATE Survey set name = :name, sn=:sn where id=:id");
                 $result = $stmt->execute(array(
                     ":name" => $name,
-                    ":title" => $title,
+                    ":sn" => $sn,
                     ":id" => $surveyId
                 ));
             }
             else{
-                $stmt = $db->prepare("INSERT INTO Survey (name, title) VALUES (:name, :title)");
+                $stmt = $db->prepare("INSERT INTO Survey (name, sn) VALUES (:name, :sn)");
                 $result = $stmt->execute(array(
                     ":name" => $name,
-                    ":title" => $title
+                    ":sn" => $sn
                 ));
             }
             $e = $stmt->errorInfo();
