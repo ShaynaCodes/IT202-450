@@ -1,10 +1,8 @@
-CREATE TABLE Survey{
-	id int auto_increment,
-	title varchar(30) NOT NULL unique,
-	description TEXT,
-	visibility int,
-	PRIMARY KEY(id),
-	
-}
-	
-	
+CREATE TABLE Things (
+    id int auto_increment,
+    name varchar(20) unique,
+    quantity int default 0,
+    created datetime default current_timestamp,
+    modified datetime default current_timestamp onupdate current_timestamp,
+    primary key (id)
+)

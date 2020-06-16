@@ -2,7 +2,7 @@
 require("config.php");
 $connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 $db = new PDO($connection_string, $dbuser, $dbpass);
-$surveyId = -1;
+$thingId = -1;
 $result = array();
 function get($arr, $key){
     if(isset($arr[$key])){
@@ -10,53 +10,53 @@ function get($arr, $key){
     }
     return "";
 }
-if(isset($_GET["surveyId"])){
-    $thingId = $_GET["surveyId"];
-    $stmt = $db->prepare("SELECT * FROM Survey where id = :id");
-    $stmt->execute([":id"=>$surveyId]);
+if(isset($_GET["thingId"])){
+    $thingId = $_GET["thingId"];
+    $stmt = $db->prepare("SELECT * FROM Things where id = :id");
+    $stmt->execute([":id"=>$thingId]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!$result){
-        $surveyId = -1;
+        $thingId = -1;
     }
 }
 else{
-    echo "No surveyId provided in url, don't forget this or sample won't work.";
+    echo "No thingId provided in url, don't forget this or sample won't work.";
 }
 ?>
 
 <form method="POST">
-	<label for="survey">Survey Name
-	<input type="text" id="survey" name="name" value="<?php echo get($result, "name");?>" />
+	<label for="thing">Thing Name
+	<input type="text" id="thing" name="name" value="<?php echo get($result, "name");?>" />
 	</label>
-	<label for="q">Survey Number
-	<input type="number" id="n" name="sn" value="<?php echo get($result, "sn");?>" />
+	<label for="q">Quantity
+	<input type="number" id="q" name="quantity" value="<?php echo get($result, "quantity");?>" />
 	</label>
-    <?php if($surveyId > 0):?>
-	    <input type="submit" name="updated" value="Update Survey"/>
-    <?php elseif ($surveyId < 0):?>
-        <input type="submit" name="created" value="Create Survey"/>
+    <?php if($thingId > 0):?>
+	    <input type="submit" name="updated" value="Update Thing"/>
+    <?php elseif ($thingId < 0):?>
+        <input type="submit" name="created" value="Create Thing"/>
     <?php endif;?>
 </form>
 
 <?php
 if(isset($_POST["updated"]) || isset($_POST["created"])){
     $name = $_POST["name"];
-    $sn = $_POST["sn"];
-    if(!empty($name) && !empty($sn)){
+    $quantity = $_POST["quantity"];
+    if(!empty($name) && !empty($quantity)){
         try{
-            if($surveyId > 0) {
-                $stmt = $db->prepare("UPDATE Survey set name = :name, sn=:sn where id=:id");
+            if($thingId > 0) {
+                $stmt = $db->prepare("UPDATE Things set name = :name, quantity=:quantity where id=:id");
                 $result = $stmt->execute(array(
                     ":name" => $name,
-                    ":sn" => $sn,
-                    ":id" => $surveyId
+                    ":quantity" => $quantity,
+                    ":id" => $thingId
                 ));
             }
             else{
-                $stmt = $db->prepare("INSERT INTO Survey (name, sn) VALUES (:name, :sn)");
+                $stmt = $db->prepare("INSERT INTO Things (name, quantity) VALUES (:name, :quantity)");
                 $result = $stmt->execute(array(
                     ":name" => $name,
-                    ":sn" => $sn
+                    ":quantity" => $quantity
                 ));
             }
             $e = $stmt->errorInfo();
@@ -66,7 +66,7 @@ if(isset($_POST["updated"]) || isset($_POST["created"])){
             else{
                 echo var_export($result, true);
                 if ($result){
-                    echo "Successfully inserted or updated survey: " . $name;
+                    echo "Successfully inserted or updated thing: " . $name;
                 }
                 else{
                     echo "Error inserting or updating record";
@@ -78,7 +78,7 @@ if(isset($_POST["updated"]) || isset($_POST["created"])){
         }
     }
     else{
-        echo "Name and title must not be empty.";
+        echo "Name and quantity must not be empty.";
     }
 }
 ?>
