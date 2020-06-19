@@ -1,9 +1,13 @@
   
-CREATE TABLE Things (
-    id int auto_increment,
-    name varchar(20) unique,
-    quantity int default 0,
-    created datetime default current_timestamp,
-    modified datetime default current_timestamp onupdate current_timestamp,
-    primary key (id)
+CREATE TABLE Survey
+(
+	Username varchar(60) NOT NULL,
+	Email varchar(120) NOT NULL UNIQUE,
+	Password varchar(120),
+	First_name varchar(50) NOT NULL,
+	Last_name varchar(50) NOT NULL,
+	AGE INT,
+	Phone varchar(25),
+	State varchar(2),
+	PRIMARY KEY(Username)
 )
