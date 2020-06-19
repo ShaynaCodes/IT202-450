@@ -1,3 +1,4 @@
+  
 <?php
 function get($arr, $key){
     if(isset($arr[$key])){
