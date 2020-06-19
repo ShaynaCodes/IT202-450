@@ -5,7 +5,7 @@
 	<label for="q">Quantity
 	<input type="number" id="q" name="quantity" />
 	</label>
-	<input type="submit" name="created" value="Survey Thing"/>
+	<input type="submit" name="created" value="Create Survey"/>
 </form>
 
 <?php
