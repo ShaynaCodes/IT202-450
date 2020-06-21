@@ -2,7 +2,7 @@
 require("config.php");
 $connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 $db = new PDO($connection_string, $dbuser, $dbpass);
-$surveyId = -1;
+$thingId = -1;
 $result = array();
 function get($arr, $key){
     if(isset($arr[$key])){
@@ -10,17 +10,17 @@ function get($arr, $key){
     }
     return "";
 }
-if(isset($_GET["surveyId"])){
-    $surveyId = $_GET["surveyId"];
-    $stmt = $db->prepare("SELECT * FROM Survey where id = :id");
-    $stmt->execute([":id"=>$surveyId]);
+if(isset($_GET["thingId"])){
+    $thingId = $_GET["thingId"];
+    $stmt = $db->prepare("SELECT * FROM Surveys where id = :id");
+    $stmt->execute([":id"=>$thingId]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!$result){
-        $surveyId = -1;
+        $thingId = -1;
     }
 }
 else{
-    echo "No surveyId provided in url, don't forget this or sample won't work.";
+    echo "No thingId provided in url, don't forget this or sample won't work.";
 }
 ?>
 
@@ -31,10 +31,10 @@ else{
 	<label for="q">Quantity
 	<input type="number" id="q" name="quantity" value="<?php echo get($result, "quantity");?>" />
 	</label>
-    <?php if($surveyId > 0):?>
+    <?php if($thingId > 0):?>
 	    <input type="submit" name="updated" value="Update Survey"/>
         <input type="submit" name="delete" value="Delete Survey"/>
-    <?php elseif ($surveyId < 0):?>
+    <?php elseif ($thingId < 0):?>
         <input type="submit" name="created" value="Create Survey"/>
     <?php endif;?>
 </form>
@@ -46,24 +46,24 @@ if(isset($_POST["updated"]) || isset($_POST["created"]) || isset($_POST["delete"
     $quantity = $_POST["quantity"];
     if(!empty($name) && !empty($quantity)){
         try{
-            if($surveyId > 0) {
+            if($thingId > 0) {
                 if($delete){
-                    $stmt = $db->prepare("DELETE from Survey where id=:id");
+                    $stmt = $db->prepare("DELETE from Surveys where id=:id");
                     $result = $stmt->execute(array(
-                        ":id" => $surveyId
+                        ":id" => $thingId
                     ));
                 }
                 else {
-                    $stmt = $db->prepare("UPDATE Survey set name = :name, quantity=:quantity where id=:id");
+                    $stmt = $db->prepare("UPDATE Surveys set name = :name, quantity=:quantity where id=:id");
                     $result = $stmt->execute(array(
                         ":name" => $name,
                         ":quantity" => $quantity,
-                        ":id" => $surveyId
+                        ":id" => $thingId
                     ));
                 }
             }
             else{
-                $stmt = $db->prepare("INSERT INTO Survey (name, quantity) VALUES (:name, :quantity)");
+                $stmt = $db->prepare("INSERT INTO Surveys (name, quantity) VALUES (:name, :quantity)");
                 $result = $stmt->execute(array(
                     ":name" => $name,
                     ":quantity" => $quantity
@@ -76,7 +76,7 @@ if(isset($_POST["updated"]) || isset($_POST["created"]) || isset($_POST["delete"
             else{
                 echo var_export($result, true);
                 if ($result){
-                    echo "Successfully interacted with Survey: " . $name;
+                    echo "Successfully interacted with survey: " . $name;
                 }
                 else{
                     echo "Error interacting record";

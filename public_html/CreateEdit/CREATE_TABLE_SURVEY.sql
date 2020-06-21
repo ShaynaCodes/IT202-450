@@ -1,5 +1,5 @@
   
-CREATE TABLE Survey
+CREATE TABLE Surveys
 (
 	Username varchar(60) NOT NULL,
 	Email varchar(120) NOT NULL UNIQUE,

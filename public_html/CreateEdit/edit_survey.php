@@ -12,7 +12,7 @@ function get($arr, $key){
 }
 if(isset($_GET["surveyId"])){
     $surveyId = $_GET["surveyId"];
-    $stmt = $db->prepare("SELECT * FROM Survey where id = :id");
+    $stmt = $db->prepare("SELECT * FROM Surveys where id = :id");
     $stmt->execute([":id"=>$surveyId]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -37,7 +37,7 @@ if(isset($_POST["updated"])){
     $quantity = $_POST["quantity"];
     if(!empty($name) && !empty($quantity)){
         try{
-            $stmt = $db->prepare("UPDATE Survey set name = :name, quantity=:quantity where id=:id");
+            $stmt = $db->prepare("UPDATE Surveys set name = :name, quantity=:quantity where id=:id");
             $result = $stmt->execute(array(
                 ":name" => $name,
                 ":quantity" => $quantity,
