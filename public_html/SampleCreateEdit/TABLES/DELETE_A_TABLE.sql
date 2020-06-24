@@ -1,0 +1,1 @@
+DELETE FROM Things WHERE id = :id
