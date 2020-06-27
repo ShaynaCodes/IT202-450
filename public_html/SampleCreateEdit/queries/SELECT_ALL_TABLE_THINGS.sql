@@ -1,2 +1,2 @@
 SELECT * FROM Things
-ORDER BY name ASC|DESC;
+ORDER BY name ASC;
