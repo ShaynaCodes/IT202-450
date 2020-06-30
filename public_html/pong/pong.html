@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+        #center{
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            align-content:center;
+            text-align:center;
+
+            height:99%;
+            padding:0px;
+        }
+        canvas, body{
+            padding: 0px;
+            margin:0px;
+        }
+    </style>
+</head>
+<body>
+<div id="center">
+    <canvas id="canvas" width="550px" height="550px"></canvas>
+</div>
+<span id="endGame"></span>
     <script>
         //modified from http://jsfiddle.net/bencentra/q1s8gmqv/?utm_source=website&utm_medium=embed&utm_campaign=q1s8gmqv
         var canvas;
@@ -265,14 +287,10 @@
             }
         }
 		menu();
+		canvas.focus();
     </script>
 </head>
-<body onload="init();">
-<a href="http://bencentra.com/2017-07-11-basic-html5-canvas-games.html">Collection of Canvas based games by Ben Centra</a>
-<main>
-    <canvas id="board" width="600px" height="600px" style="border: 1px solid black;">
-
-    </canvas>
+</canvas>
 </main>
 </body>
 </html>
