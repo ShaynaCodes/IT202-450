@@ -195,31 +195,7 @@
                 }
             }
         }
-		//menu
-		function menu() {
-        erase();
-        // Show the menu
-        context.fillStyle = '#000000';
-        context.font = '24px Arial';
-        context.textAlign = 'center';
-        context.fillText('PONG', canvas.width / 2, canvas.height / 4);
-        context.font = '18px Arial';
-        context.fillText('Click to Start', canvas.width / 2, canvas.height / 3);
-        context.font = '14px Arial';
-        context.textAlign = 'left';
-        context.fillText('Player 1: W (up) and S (down)', 5, (canvas.height / 3) * 2);
-        context.textAlign = 'right';
-        context.fillText('Player 2: UP (up) and DOWN (down)', canvas.width - 5, (canvas.height / 3) * 2);
-        // Start the game on a click
-        canvas.addEventListener('click', startGame);
-    }
-
-		//start game
-		function startGame(){
-		canvas.removeEventListener('click', startGame);
-		resetBall()
-		drew();
-		}
+		
         function checkScore() {
             // Score if the ball goes past a paddle
             if (ball.x < leftPaddle.x) {
@@ -241,6 +217,34 @@
             context.textAlign = 'right';
             context.fillText('Score: ' + rightScore, canvas.width - 5, 24);
         }
+		// Show the menu
+    function menu() {
+        erase();
+        // Show the menu
+        context.fillStyle = '#000000';
+        context.font = '24px Arial';
+        context.textAlign = 'center';
+        context.fillText('PONG', canvas.width / 2, canvas.height / 4);
+        context.font = '18px Arial';
+        context.fillText('Click to Start', canvas.width / 2, canvas.height / 3);
+        context.font = '14px Arial';
+        context.textAlign = 'left';
+        context.fillText('Player 1: W (up) and S (down)', 5, (canvas.height / 3) * 2);
+        context.textAlign = 'right';
+        context.fillText('Player 2: UP (up) and DOWN (down)', canvas.width - 5, (canvas.height / 3) * 2);
+        // Start the game on a click
+        canvas.addEventListener('click', startGame);
+    }
+
+    // Start the game
+    function startGame() {
+        // Don't accept any more clicks
+        canvas.removeEventListener('click', startGame);
+        // Put the ball in place
+        resetBalls();
+        // Kick off the game loop
+        draw();
+    }
         function erase() {
             context.fillStyle = '#FFFFFF';
             context.fillRect(0, 0, canvas.width, canvas.height);
@@ -260,6 +264,7 @@
                 drawables[i].draw();
             }
         }
+		menu();
     </script>
 </head>
 <body onload="init();">
