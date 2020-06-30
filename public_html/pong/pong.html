@@ -195,7 +195,25 @@
                 }
             }
         }
-		
+		//menu
+		function menu() {
+        erase();
+        // Show the menu
+        context.fillStyle = '#000000';
+        context.font = '24px Arial';
+        context.textAlign = 'center';
+        context.fillText('PONG', canvas.width / 2, canvas.height / 4);
+        context.font = '18px Arial';
+        context.fillText('Click to Start', canvas.width / 2, canvas.height / 3);
+        context.font = '14px Arial';
+        context.textAlign = 'left';
+        context.fillText('Player 1: W (up) and S (down)', 5, (canvas.height / 3) * 2);
+        context.textAlign = 'right';
+        context.fillText('Player 2: UP (up) and DOWN (down)', canvas.width - 5, (canvas.height / 3) * 2);
+        // Start the game on a click
+        canvas.addEventListener('click', startGame);
+    }
+
 		//start game
 		function startGame(){
 		canvas.removeEventListener('click', startGame);
