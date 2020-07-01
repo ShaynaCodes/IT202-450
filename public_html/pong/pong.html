@@ -229,7 +229,6 @@
            // movePaddle();
            // doAI();
             //moveBall();
-
             //checkPaddleCollision();
             //checkScore();
             //drawScores();
@@ -249,6 +248,40 @@
 			let eg = document.getElementById("endGame");
 			eg.innerHTML = "<button onclick='reload();'>Press me</button>";
 		}
+		 function draw() {
+        erase();
+        // Move the paddles
+        if (keys.W) {
+            leftPaddle.y -= leftPaddle.s;
+        }
+        if (keys.S) {
+            leftPaddle.y += leftPaddle.s;
+        }
+        if (keys.UP) {
+            rightPaddle.y -= rightPaddle.s;
+        }
+        if (keys.DOWN) {
+            rightPaddle.y += rightPaddle.s;
+        }
+
+
+        // Don't let the paddles go off screen
+        [leftPaddle, rightPaddle].forEach(function(paddle) {
+            if (paddle.y < 0) {
+                paddle.y = 0;
+            }
+            if (paddle.y + paddle.h > canvas.height) {
+                paddle.y = canvas.height - paddle.h;
+            }
+        });
+        for(let i = 0; i < balls.length; i++){
+            let ball = balls[i];
+            move(ball);
+            bounce(ball);
+            hitPaddle(ball);
+            checkScore(ball);
+            ball.draw();
+        }
     </script>
 </head>
 <body onload="init();">
