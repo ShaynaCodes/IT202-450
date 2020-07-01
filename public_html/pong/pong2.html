@@ -101,7 +101,7 @@
         }, 500 * i);
 
     }*/
-   /* function randomDir(ball){
+    function randomDir(ball){
         // Randomize initial direction
         if (Math.random() > 0.5) {
             ball.sX *= -1;
@@ -112,8 +112,8 @@
             ball.sY *= -1;
             console.log("Invert y");
         }
-    }*/
-function init() {
+    }
+		function init() {
             canvas = document.getElementById("board");
             if (canvas.getContext) {
                 context = canvas.getContext("2d");
