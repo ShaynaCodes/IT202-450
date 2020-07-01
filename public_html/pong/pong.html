@@ -239,24 +239,15 @@
             }
         }
 		function won(){
-			if(leftScore == 13)
-			{
 			erase();
-			 context.fillStyle = '#000000';
+			context.fillStyle = '#000000';
 			context.font = '24px Arial';
 			context.textAlign = 'center';
 			var winner = 1;
-			context.fillText("Player " + winner + " wins!", canvas.width/2, canvas.height/2);
-			}
-			if(rightScore == 13)
-			{
-			erase();
-			 context.fillStyle = '#000000';
-			context.font = '24px Arial';
-			context.textAlign = 'center';
-			var winner = 2;
-			context.fillText("Player " + winner + " wins!", canvas.width/2, canvas.height/2);
-			}
+			if (rightScore === 13) winner = 2;
+			context.fillText('Player ' + winner + ' wins!', canvas.width/2, canvas.height/2);
+			let eg = document.getElementById("endGame");
+			eg.innerHTML = "<button onclick='reload();'>Press me</button>";
 		}
     </script>
 </head>
