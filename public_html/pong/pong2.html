@@ -89,7 +89,7 @@
     we have it loop during the "game loop" then pass each ball
     to the function and process the logic per ball
     */
-    var ballsToSpawn = 1;
+    var ballsToSpawn = 2;
     for(let i = 0; i < ballsToSpawn; i++){
 
         setTimeout(function(){
@@ -342,7 +342,7 @@
         context.textAlign = 'right';
         context.fillText('Score: ' + rightScore, canvas.width - 5, 24);
         // End the game or keep going
-        if (leftScore === 10 || rightScore === 10) {
+        if (leftScore === 13 || rightScore === 13) {
             endGame();
 
         } else {
