@@ -89,8 +89,8 @@
     we have it loop during the "game loop" then pass each ball
     to the function and process the logic per ball
     */
-   // var ballsToSpawn = 3;
-   /* for(let i = 0; i < ballsToSpawn; i++){
+    var ballsToSpawn = 1;
+    for(let i = 0; i < ballsToSpawn; i++){
 
         setTimeout(function(){
             let ball = makeRect(0, 0, ballLength, ballLength, ballSpeed, '#000000');
@@ -100,7 +100,7 @@
             randomDir(ball);
         }, 500 * i);
 
-    }*/
+    }
     function randomDir(ball){
         // Randomize initial direction
         if (Math.random() > 0.5) {
