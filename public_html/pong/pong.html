@@ -224,20 +224,20 @@
             context.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        function gameLoop() {
-            erase();
-            movePaddle();
-            doAI();
-            moveBall();
+       // function gameLoop() {
+         //   erase();
+           // movePaddle();
+           // doAI();
+            //moveBall();
 
-            checkPaddleCollision();
-            checkScore();
-            drawScores();
+            //checkPaddleCollision();
+            //checkScore();
+            //drawScores();
             //draw stuff
-            for (let i = 0; i < drawables.length; i++) {
-                drawables[i].draw();
-            }
-        }
+            //for (let i = 0; i < drawables.length; i++) {
+              //  drawables[i].draw();
+            //}
+       // }
 		function won(){
 			erase();
 			context.fillStyle = '#000000';
