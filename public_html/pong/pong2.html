@@ -62,20 +62,13 @@
             }
         };
     }
-   // var swapped = false;
     // Create the paddles
     var paddleWidth = 25;
     var paddleHeight = 100;
     var leftPaddle = makeRect(25, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, 5, '#59206A');
     var rightPaddle = makeRect(canvas.width - paddleWidth - 25, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, 5, '#22206A');
 
-    //why not rotate the canvas 20degrees every 5 sec?
-  /*  var deg = 0;
-    window.setInterval(function(){
-        deg+= 20;
-        canvas.style.transform = "rotate(" + deg + "deg)";
-    }, 5000);*/
-    //end rotate
+  
 
     // Keep track of the score
     var leftScore = 0;
@@ -84,17 +77,12 @@
     // Create the ball
     var ballLength = 15;
     var ballSpeed = 2;
-    //create X pong balls
-    /*
-    had to wrap all pong ball interaction inside functions
-    we have it loop during the "game loop" then pass each ball
-    to the function and process the logic per ball
-    */
+  
     var ballsToSpawn = 2;
     for(let i = 0; i < ballsToSpawn; i++){
 
         setTimeout(function(){
-            let ball = makeRect(0, 0, ballLength, ballLength, ballSpeed, '#000000');
+            let ball = makeRect(0, 0, ballLength, ballLength, ballSpeed, '#FF007E');
             balls.push(ball);
             ball.sX = ballSpeed;
             ball.sY = ballSpeed/2;
@@ -331,7 +319,6 @@
             ball.draw();
         }
 
-    //    swapIt();
         // Draw the paddles and ball
         leftPaddle.draw();
         rightPaddle.draw();
@@ -350,19 +337,6 @@
             window.requestAnimationFrame(draw);
         }
     }
-
-  /*  function swapIt(){
-        if(swapped){
-            return;
-        }
-        if(leftScore == 3 || rightScore == 3){
-            let t = leftScore;
-            leftScore = rightScore;
-            rightScore = t;
-            console.log("Swapped");
-            swapped = true;
-        }
-    }*/
     // Show the menu to start the game
     menu();
     canvas.focus();
