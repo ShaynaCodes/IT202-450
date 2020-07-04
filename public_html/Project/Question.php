@@ -32,7 +32,7 @@ if(isset($_POST["survey"])){
 			$Option2 = $_POST["answer2"];
 			$Option3 = $_POST["answer3"];
 			$Option4 = $_POST["answer4"];
-		if(($answer1!=$answer2)&&($answer1!=$answer3)&&($answer1!=$answer4)&&($answer2!=$answer3)&&($answer2!=$answer4)&&($answer3!=$answer4)){
+		if(($Option1!=$Option2)&&($Option1!=$Option3)&&($Option1!=$Option4)&&($Option2!=$Option3)&&($Option2!=$Option4)&&($Option3!=$Option4)){
 			require("config.php");
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 			try{
