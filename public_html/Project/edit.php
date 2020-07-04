@@ -3,8 +3,8 @@
 </head>
 <?php
 $surveyId = -1;
-if(isset($_GET["surveyId"]) && !empty($_GET["surveyId"])){
-    $thingId = $_GET["surveyId"];
+if(isset($_GET["SurveyID"]) && !empty($_GET["SurveyID"])){
+    $thingId = $_GET["SurveyID"];
 }
 $result = array();
 require("common.inc.php");
