@@ -39,10 +39,10 @@ if(isset($_POST["survey"])){
 				$db = new PDO($connection_string, $dbuser, $dbpass);
 				$stmt = $db->prepare("INSERT INTO Survey (question, Option1, Option2, Option3, Option4) VALUES (:question, :answer1, :answer2, :answer3, :answer4)");
 				$r = $stmt->execute(array(
-					":question"=> $question
-					":answer1"=> $Option1
-					":answer2"=> $Qption2
-					":answer3"=> $Option3
+					":question"=> $question,
+					":answer1"=> $Option1,
+					":answer2"=> $Qption2,
+					":answer3"=> $Option3,
 					":answer4"=> $Option4
 				));
 				echo var_export($stmt->errorInfo(), true);
