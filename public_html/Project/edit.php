@@ -79,7 +79,7 @@ if($surveyId > -1){
     }
 }
 else{
-    echo "No surveyId provided in url, don't forget this or sample won't work.";
+   // echo "No surveyId provided in url, don't forget this or sample won't work.";
 }
 ?>
 <script src="js/script.js"></script>
