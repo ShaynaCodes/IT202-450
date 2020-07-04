@@ -1,2 +1,2 @@
   
-SELECT * FROM Survey where title = :title LIMIT 1
+SELECT * FROM Survey where visibility = :visibility LIMIT 1
