@@ -1,4 +1,7 @@
 <?php
+include("header.php");
+?>
+<?php
 require("common.inc.php");
 $query = file_get_contents(__DIR__ . "/queries/SELECT_ALL_TABLE_SURVEY.sql");
 //prep our response object
