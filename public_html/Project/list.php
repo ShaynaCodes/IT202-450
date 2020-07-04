@@ -27,7 +27,7 @@ note the structure and the ":" -->
             <li>
                 <?php echo get($row, "question")?>
           
-                <a href="delete.php?SurveyID=<?php echo get($row, "SurveyID");?>">Delete</a>
+                <a href="delete.php?surveyId=<?php echo get($row, "SurveyID");?>">Delete</a>
             </li>
         <?php endforeach;?>
     </ul>

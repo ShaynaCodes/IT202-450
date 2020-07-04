@@ -12,7 +12,7 @@
                 }
             }
         };
-        xhttp.open("GET", "ajax_delete.php?SurveyID=" + SurveyID, true);
+        xhttp.open("GET", "ajax_delete.php?surveyId=" + SurveyID, true);
         xhttp.send();
     }
     function fetchSurvey(){
@@ -25,7 +25,7 @@
                     let ul = document.createElement("ul");
                     json.results.forEach(function(item, index){
                         let li = document.createElement("li");
-                        li.innerText = item.question;
+                         li.innerText = item.SurveyID + ": " + item.question;
                         let deleteButton = document.createElement("a");
                         deleteButton.href = "#";
                         deleteButton.onclick = function(){
