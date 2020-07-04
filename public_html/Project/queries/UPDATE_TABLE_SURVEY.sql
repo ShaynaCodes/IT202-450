@@ -1,1 +1,1 @@
-UPDATE Survey set question = :question where surveyId=:SurveyID
+UPDATE Survey set question = :question where SurveyID=:surveyId

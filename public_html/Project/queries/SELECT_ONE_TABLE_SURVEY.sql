@@ -1,2 +1,2 @@
   
-SELECT * FROM Survey where surveyId = :SurveyID LIMIT 1
+SELECT * FROM Survey where SurveyID = :surveyId LIMIT 1

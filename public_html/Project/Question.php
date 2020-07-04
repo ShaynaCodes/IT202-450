@@ -42,7 +42,7 @@ if(isset($_POST["survey"])){
 					":answer1"=> $Option1,
 					":answer2"=> $Option2,
 					":answer3"=> $Option3,
-					":answer4"=> $Option4s
+					":answer4"=> $Option4
 				));
 				echo var_export($stmt->errorInfo(), true);
 				echo var_export($r, true);

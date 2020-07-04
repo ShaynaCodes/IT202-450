@@ -1,7 +1,7 @@
 <?php
 $surveyId = -1;
 if(isset($_GET["surveyId"]) && !empty($_GET["surveyId"])){
-    $surveyId = $_GET["surveyId"];
+    $thingId = $_GET["surveyId"];
 }
 $result = array();
 require("common.inc.php");
@@ -11,9 +11,9 @@ if(isset($_POST["updated"])){
     $question = "";
    // $quantity = -1;
     if(isset($_POST["question"]) && !empty($_POST["question"])){
-        $question = $_POST["question"];
+        $name = $_POST["question"];
     }
-   /* if(isset($_POST["quantity"]) && !empty($_POST["quantity"])){
+    /*if(isset($_POST["quantity"]) && !empty($_POST["quantity"])){
         if(is_numeric($_POST["quantity"])){
             $quantity = (int)$_POST["quantity"];
         }*/
@@ -21,12 +21,13 @@ if(isset($_POST["updated"])){
     if(!empty($question)){
         try{
             $query = NULL;
-          //  echo "[Quantity" . $quantity . "]";
+         //   echo "[Quantity" . $quantity . "]";
             $query = file_get_contents(__DIR__ . "/queries/UPDATE_TABLE_SURVEY.sql");
             if(isset($query) && !empty($query)) {
                 $stmt = getDB()->prepare($query);
                 $result = $stmt->execute(array(
                     ":question" => $question,
+                  //  ":quantity" => $quantity,
                     ":SurveyID" => $surveyId
                 ));
                 $e = $stmt->errorInfo();
@@ -82,7 +83,7 @@ else{
 <!-- note although <script> tag "can" be self terminating some browsers require the
 full closing tag-->
 <form method="POST"onsubmit="return validate(this);">
-<label for="survey">question Name
+<label for="survey">Survey Name
     <!-- since the last assignment we added a required attribute to the form elements-->
     <input type="text" id="survey" name="question" value="<?php echo get($result, "question");?>" required />
 </label>
