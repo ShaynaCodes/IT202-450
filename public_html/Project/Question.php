@@ -25,8 +25,7 @@ include("header.php");
 </div>
 <?php
 if(isset($_POST["survey"])){
-	if(isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer3"])
-		&& isset($_POST["answer4"])){
+	if(isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer4"])){
 			$question = $_POST["question"];
 			$Option1 = $_POST["answer1"];
 			$Option2 = $_POST["answer2"];
