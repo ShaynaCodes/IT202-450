@@ -4,7 +4,7 @@
 <?php
 $surveyId = -1;
 if(isset($_GET["SurveyID"]) && !empty($_GET["SurveyID"])){
-    $thingId = $_GET["SurveyID"];
+    $surveyId = $_GET["SurveyID"];
 }
 $result = array();
 require("common.inc.php");
