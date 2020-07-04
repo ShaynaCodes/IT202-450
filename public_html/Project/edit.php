@@ -8,26 +8,26 @@ require("common.inc.php");
 ?>
 <?php
 if(isset($_POST["updated"])){
+    $title = "";
     $question = "";
-   // $quantity = -1;
-    if(isset($_POST["question"]) && !empty($_POST["question"])){
-        $name = $_POST["question"];
+    if(isset($_POST["title"]) && !empty($_POST["title"])){
+        $name = $_POST["title"];
     }
-    /*if(isset($_POST["quantity"]) && !empty($_POST["quantity"])){
-        if(is_numeric($_POST["quantity"])){
-            $quantity = (int)$_POST["quantity"];
-        }*/
+    if(isset($_POST["question"]) && !empty($_POST["question"])){
+        if(is_numeric($_POST["question"])){
+            $quantity = (int)$_POST["question"];
+        }
     
-    if(!empty($question)){
+    if(!empty($title)){
         try{
             $query = NULL;
-         //   echo "[Quantity" . $quantity . "]";
+           echo "[question" . $question . "]";
             $query = file_get_contents(__DIR__ . "/queries/UPDATE_TABLE_SURVEY.sql");
             if(isset($query) && !empty($query)) {
                 $stmt = getDB()->prepare($query);
                 $result = $stmt->execute(array(
+                    ":title" => $title,
                     ":question" => $question,
-                  //  ":quantity" => $quantity,
                     ":SurveyID" => $surveyId
                 ));
                 $e = $stmt->errorInfo();
@@ -35,7 +35,7 @@ if(isset($_POST["updated"])){
                     echo var_export($e, true);
                 } else {
                     if ($result) {
-                        echo "Successfully updated thing: " . $question;
+                        echo "Successfully updated thing: " . $title;
                     } else {
                         echo "Error updating record";
                     }
@@ -50,7 +50,7 @@ if(isset($_POST["updated"])){
         }
     }
     else{
-        echo "question must not be empty.";
+        echo "title must not be empty.";
     }
 }
 ?>
@@ -85,7 +85,7 @@ full closing tag-->
 <form method="POST"onsubmit="return validate(this);">
 <label for="survey">Survey Name
     <!-- since the last assignment we added a required attribute to the form elements-->
-    <input type="text" id="survey" name="question" value="<?php echo get($result, "question");?>" required />
+    <input type="text" id="survey" name="title" value="<?php echo get($result, "title");?>" required />
 </label>
 <input type="submit" name="updated" value="Update Survey"/>
 </form>

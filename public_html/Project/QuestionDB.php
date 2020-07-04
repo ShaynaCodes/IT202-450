@@ -6,6 +6,7 @@ try{
 	$db = new PDO($connection_string, $dbuser, $dbpass);
 	$stmt = $db->prepare("CREATE TABLE `Survey` (
 				`SurveyID` int auto_increment not null,
+				`title` varchar(30) not null unique,
 				`question` text,
 				`Option1` vaarchar(255),
 				`Option2` vaarchar(255),

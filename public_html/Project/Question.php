@@ -5,6 +5,9 @@ include("header.php");
 <h3><center><font size="24" color="#581845">Questions for Survey</font></center></h3>
 <div>
 <form method = "POST">
+	<label for="title">Write Survey Title:<br>
+	<input type="title" id="title" name="title" ><br>
+	</label>
 	<label for="Question">Write your Question:<br>
 	<input type="question" id="question" name="question" ><br>
 	</label>
@@ -25,7 +28,8 @@ include("header.php");
 </div>
 <?php
 if(isset($_POST["survey"])){
-	if(isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer4"])){
+	if(isset($_POST["title"])&& isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer4"])){
+			$title = $_POST["title"];
 			$question = $_POST["question"];
 			$Option1 = $_POST["answer1"];
 			$Option2 = $_POST["answer2"];
@@ -36,8 +40,9 @@ if(isset($_POST["survey"])){
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 			try{
 				$db = new PDO($connection_string, $dbuser, $dbpass);
-				$stmt = $db->prepare("INSERT INTO Survey (question, Option1, Option2, Option3, Option4) VALUES (:question, :answer1, :answer2, :answer3, :answer4)");
+				$stmt = $db->prepare("INSERT INTO Survey (title,question, Option1, Option2, Option3, Option4) VALUES (:question, :answer1, :answer2, :answer3, :answer4)");
 				$r = $stmt->execute(array(
+					":title"=> $title,
 					":question"=> $question,
 					":answer1"=> $Option1,
 					":answer2"=> $Option2,

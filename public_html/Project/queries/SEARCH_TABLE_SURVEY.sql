@@ -1,1 +1,1 @@
-SELECT * FROM Survey where question like CONCAT('%', :survey, '%')
+SELECT * FROM Survey where title like CONCAT('%', :survey, '%')
