@@ -17,7 +17,7 @@ if(isset($_POST["updated"])){
         if(is_numeric($_POST["question"])){
             $quantity = (int)$_POST["question"];
         }
-    
+    }
     if(!empty($title)){
         try{
             $query = NULL;
@@ -86,6 +86,10 @@ full closing tag-->
 <label for="survey">Survey Name
     <!-- since the last assignment we added a required attribute to the form elements-->
     <input type="text" id="survey" name="title" value="<?php echo get($result, "title");?>" required />
+</label>
+<label for="survey">Survey Question
+    <!-- since the last assignment we added a required attribute to the form elements-->
+    <input type="text" id="survey" name="question" value="<?php echo get($result, "question");?>" required />
 </label>
 <input type="submit" name="updated" value="Update Survey"/>
 </form>
