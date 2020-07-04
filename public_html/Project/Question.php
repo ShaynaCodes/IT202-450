@@ -7,6 +7,7 @@ include("header.php");
 <form method = "POST">
 	<label for="Question">Write your Question:<br>
 	<input type="question" id="question" name="question" ><br>
+	</label>
 	<label for=Answer1">Write your Answer 1:<br>
 	<input type="answer1" id="answer1" name="answer1" ><br>
 	</label>
@@ -31,7 +32,7 @@ if(isset($_POST["Question"])){
 			$answer2 = $_POST["answer2"];
 			$answer3 = $_POST["answer3"];
 			$answer4 = $_POST["answer4"];
-		if($answer1!=$answer2)&&($answer1!=$answer3)&&($answer1!=$answer4)&&($answer2!=$answer3)&&($answer2!=$answer4)&&($answer3!=$answer4)){
+		if(($answer1!=$answer2)&&($answer1!=$answer3)&&($answer1!=$answer4)&&($answer2!=$answer3)&&($answer2!=$answer4)&&($answer3!=$answer4)){
 			require("config.php");
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 			try{
@@ -52,6 +53,4 @@ if(isset($_POST["Question"])){
 		}
 	}
 }
-	
-		
 ?>
