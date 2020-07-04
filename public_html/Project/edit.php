@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
 <?php
 $surveyId = -1;
 if(isset($_GET["surveyId"]) && !empty($_GET["surveyId"])){
