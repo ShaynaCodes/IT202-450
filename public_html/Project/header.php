@@ -64,7 +64,7 @@ require("config.php");
 session_start();
 ?>
 <div class="header">
-	<a href="home.php" class="logo">Shayna's Site</a>
+	<a href="Question.php" class="logo">Write Questions</a>
 	<div class="header-right">
     <a href="login.php">Login</a>
     <a href="register.php">Register</a>
