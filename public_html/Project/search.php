@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
 <?php
 $search = "";
 if(isset($_POST["search"])){
