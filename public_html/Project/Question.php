@@ -23,8 +23,9 @@ include("header.php");
 	<label for=Answer4">Write your Answer 4:<br>
 	<input type="answer4" id="answer4" name="answer4"  ><br>
 	</label>
-	<label for="visibility"Visibility: Draft(0), Private(1), Publish(2)</label>
+	<label for=visibility">Visibility: Draft(0), Private(1), Publish(2)
 	<input type="number" id="visibility" name="visibility" min="0" max="2">
+	</label>
 	<input type="submit" name="survey" value="Survey"/>
 </form>
 </div>
@@ -50,7 +51,7 @@ if(isset($_POST["survey"])){
 					":answer1"=> $Option1,
 					":answer2"=> $Option2,
 					":answer3"=> $Option3,
-					":answer4"=> $Option4
+					":answer4"=> $Option4,
 					":visibility"=> $visibility
 				));
 				echo var_export($stmt->errorInfo(), true);
