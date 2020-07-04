@@ -17,7 +17,7 @@ if(isset($_POST["updated"])){
         if(is_numeric($_POST["quantity"])){
             $quantity = (int)$_POST["quantity"];
         }*/
-    }
+    
     if(!empty($question)){
         try{
             $query = NULL;
