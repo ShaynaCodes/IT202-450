@@ -6,7 +6,7 @@ if (isset($_GET["surveyId"]) && !empty($_GET["surveyId"])){
         if(isset($query) && !empty($query)) {
             require("common.inc.php");
             $stmt = getDB()->prepare($query);
-            $stmt->execute([":id"=>$surveyId]);
+            $stmt->execute([":surveyId"=>$surveyId]);
             $e = $stmt->errorInfo();
             if($e[0] == "00000"){
                 //we're just going to redirect back to the list
