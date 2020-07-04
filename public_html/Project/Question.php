@@ -12,7 +12,7 @@ include("header.php");
 	<input type="answer1" id="answer1" name="answer1" ><br>
 	</label>
 	<label for=Answer2">Write your Answer 2:<br>
-	<input type="answer2" id="answer2" name="answer2" ><br>
+	<input type="answer" id="answer2" name="answer2" ><br>
 	</label>
 	<label for=Answer3">Write your Answer 3:<br>
 	<input type="answer3" id="answer3" name="answer3" ><br>
@@ -40,9 +40,9 @@ if(isset($_POST["survey"])){
 				$r = $stmt->execute(array(
 					":question"=> $question,
 					":answer1"=> $Option1,
-					":answer2"=> $Qption2,
+					":answer2"=> $Option2,
 					":answer3"=> $Option3,
-					":answer4"=> $Option4
+					":answer4"=> $Option4s
 				));
 				echo var_export($stmt->errorInfo(), true);
 				echo var_export($r, true);
