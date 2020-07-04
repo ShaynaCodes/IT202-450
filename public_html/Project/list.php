@@ -1,6 +1,6 @@
-<?php
-include("header.php");
-?>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
 <?php
 require("common.inc.php");
 $query = file_get_contents(__DIR__ . "/queries/SELECT_ALL_TABLE_SURVEY.sql");
