@@ -7,15 +7,12 @@ try{
 	$stmt = $db->prepare("CREATE TABLE `Survey` (
 				`SurveyID` int auto_increment not null,
 				`title` varchar(30) not null unique,
+				`visibility` int,
 				`question` text,
 				`Option1` vaarchar(255),
 				`Option2` vaarchar(255),
 				`Option3` vaarchar(255),
 				`Option4` vaarchar(255),
-				`vote1` int (11),
-				`vote2` int (11),
-				`vote3` int (11),
-				`vote4` int (11),
 				PRIMARY KEY (`SurveyID`)
 				) CHARACTER SET utf8 COLLATE utf8_general_ci");
 	$r = $stmt->execute();

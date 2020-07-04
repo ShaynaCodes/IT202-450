@@ -9,25 +9,25 @@ require("common.inc.php");
 <?php
 if(isset($_POST["updated"])){
     $title = "";
-    $question = "";
+    $visibility = -1;
     if(isset($_POST["title"]) && !empty($_POST["title"])){
         $name = $_POST["title"];
     }
-    if(isset($_POST["question"]) && !empty($_POST["question"])){
-        if(is_numeric($_POST["question"])){
-            $quantity = (int)$_POST["question"];
+    if(isset($_POST["visibility"]) && !empty($_POST["visibility"])){
+        if(is_numeric($_POST["visibility"])){
+            $visibility = (int)$_POST["visibility"];
         }
     }
-    if(!empty($title)){
+    if(!empty($title) && $visibility > -1){
         try{
             $query = NULL;
-           echo "[question" . $question . "]";
+           echo "[visibility" . $visibility . "]";
             $query = file_get_contents(__DIR__ . "/queries/UPDATE_TABLE_SURVEY.sql");
             if(isset($query) && !empty($query)) {
                 $stmt = getDB()->prepare($query);
                 $result = $stmt->execute(array(
                     ":title" => $title,
-                    ":question" => $question,
+                    ":visibility" => $visibility,
                     ":SurveyID" => $surveyId
                 ));
                 $e = $stmt->errorInfo();
@@ -50,7 +50,7 @@ if(isset($_POST["updated"])){
         }
     }
     else{
-        echo "title must not be empty.";
+        echo "title and visibility must not be empty.";
     }
 }
 ?>
@@ -87,9 +87,9 @@ full closing tag-->
     <!-- since the last assignment we added a required attribute to the form elements-->
     <input type="text" id="survey" name="title" value="<?php echo get($result, "title");?>" required />
 </label>
-<label for="survey">Survey Question
-    <!-- since the last assignment we added a required attribute to the form elements-->
-    <input type="text" id="survey" name="question" value="<?php echo get($result, "question");?>" required />
+<label for="v">Visibility
+    <!-- We also added a minimum value for our number field-->
+    <input type="number" id="v" name="visibility" value="<?php echo get($result, "visibility");?>" required min="0"/>
 </label>
 <input type="submit" name="updated" value="Update Survey"/>
 </form>

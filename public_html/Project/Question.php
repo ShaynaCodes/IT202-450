@@ -23,24 +23,27 @@ include("header.php");
 	<label for=Answer4">Write your Answer 4:<br>
 	<input type="answer4" id="answer4" name="answer4"  ><br>
 	</label>
+	<label for="visibility"Visibility: Draft(0), Private(1), Publish(2)</label>
+	<input type="number" id="visibility" name="visibility" min="0" max="2">
 	<input type="submit" name="survey" value="Survey"/>
 </form>
 </div>
 <?php
 if(isset($_POST["survey"])){
-	if(isset($_POST["title"])&& isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer4"])){
+	if(isset($_POST["title"])&& isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer4"])&& isset($_POST["visibility"])){
 			$title = $_POST["title"];
 			$question = $_POST["question"];
 			$Option1 = $_POST["answer1"];
 			$Option2 = $_POST["answer2"];
 			$Option3 = $_POST["answer3"];
 			$Option4 = $_POST["answer4"];
+			$visibility = $_POST["visibility"];
 		if(($Option1!=$Option2)&&($Option1!=$Option3)&&($Option1!=$Option4)&&($Option2!=$Option3)&&($Option2!=$Option4)&&($Option3!=$Option4)){
 			require("config.php");
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
 			try{
 				$db = new PDO($connection_string, $dbuser, $dbpass);
-				$stmt = $db->prepare("INSERT INTO Survey (title, question, Option1, Option2, Option3, Option4) VALUES (:title, :question, :answer1, :answer2, :answer3, :answer4)");
+				$stmt = $db->prepare("INSERT INTO Survey (title, question, Option1, Option2, Option3, Option4, visibility) VALUES (:title, :question, :answer1, :answer2, :answer3, :answer4, :visibility)");
 				$r = $stmt->execute(array(
 					":title"=> $title,
 					":question"=> $question,
@@ -48,6 +51,7 @@ if(isset($_POST["survey"])){
 					":answer2"=> $Option2,
 					":answer3"=> $Option3,
 					":answer4"=> $Option4
+					":visibility"=> $visibility
 				));
 				echo var_export($stmt->errorInfo(), true);
 				echo var_export($r, true);

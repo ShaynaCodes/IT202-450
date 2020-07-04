@@ -4,16 +4,16 @@ function validate(form){
     //it's to show an example of how you can check for a property so you can reuse a validate function for similar
     //forms.
     errors = [];
-    if(form.hasOwnProperty("title") && form.hasOwnProperty("question")){
+    if(form.hasOwnProperty("title") && form.hasOwnProperty("visibility")){
         if (form.title.value == null ||
             form.title.value == undefined ||
             form.title.value.length == 0) {
             errors.push("title must not be empty");
         }
-		 if (form.question.value == null ||
-            form.question.value == undefined ||
-            form.SurveyID.value.length == 0 {
-            errors.push("question must not be empty");
+		if (form.visibility.value == null ||
+            form.visibility.value == undefined ||
+            form.visibility.value.length == 0 || form.visibility.value < 0) {
+            errors.push("visibility must not be empty and a positive number");
         }
     }
 	
