@@ -1,12 +1,12 @@
 <?php
-if (isset($_GET["surveyId"]) && !empty($_GET["surveyId"])){
-    if(is_numeric($_GET["surveyId"])){
-        $surveyId = (int)$_GET["surveyId"];
+if (isset($_GET["question"]) && !empty($_GET["question"])){
+    if(is_numeric($_GET["question"])){
+        $question = (int)$_GET["question"];
         $query = file_get_contents(__DIR__ . "/queries/DELETE_ONE_TABLE_SURVEY.sql");
         if(isset($query) && !empty($query)) {
             require("common.inc.php");
             $stmt = getDB()->prepare($query);
-            $stmt->execute([":SurveyID"=>$surveyId]);
+            $stmt->execute([":question"=>$question]);
             $e = $stmt->errorInfo();
             if($e[0] == "00000"){
                 //we're just going to redirect back to the list

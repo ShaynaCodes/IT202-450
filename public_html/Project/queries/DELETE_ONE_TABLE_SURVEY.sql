@@ -1,1 +1,1 @@
-DELETE FROM Survey WHERE ID = :surveyId
+DELETE FROM Survey WHERE question = :question
