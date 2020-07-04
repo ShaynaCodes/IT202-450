@@ -1,0 +1,1 @@
+SELECT * FROM Survey where question like CONCAT('%', :survey, '%')

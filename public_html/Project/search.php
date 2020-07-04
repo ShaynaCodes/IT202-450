@@ -38,7 +38,7 @@ note the structure and the ":" -->
         <?php foreach($results as $row):?>
             <li>
                 <?php echo get($row, "question")?>
-                <a href="delete.php?surveyId=<?php echo get($row, "id");?>">Delete</a>
+                <a href="delete.php?surveyId=<?php echo get($row, "SurveyID");?>">Delete</a>
             </li>
         <?php endforeach;?>
     </ul>
