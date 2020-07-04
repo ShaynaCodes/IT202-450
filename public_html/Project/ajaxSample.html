@@ -31,7 +31,7 @@
                         deleteButton.onclick = function(){
                             //path is <a> / <li> / <ul>
                             this.parentNode.parentNode.removeChild(this.parentNode);
-                            deleteSurvey(item.id);
+                            deleteSurvey(item.SurveyID);
                         };
                         deleteButton.innerText = "Delete";
                         li.appendChild(deleteButton);
