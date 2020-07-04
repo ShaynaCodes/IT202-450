@@ -28,10 +28,10 @@ if(isset($_POST["survey"])){
 	if(isset($_POST["question"]) && isset($_POST["answer1"]) && isset($_POST["answer2"])&& isset($_POST["answer3"])&& isset($_POST["answer3"])
 		&& isset($_POST["answer4"])){
 			$question = $_POST["question"];
-			$answer1 = $_POST["answer1"];
-			$answer2 = $_POST["answer2"];
-			$answer3 = $_POST["answer3"];
-			$answer4 = $_POST["answer4"];
+			$Option1 = $_POST["answer1"];
+			$Option2 = $_POST["answer2"];
+			$Option3 = $_POST["answer3"];
+			$Option4 = $_POST["answer4"];
 		if(($answer1!=$answer2)&&($answer1!=$answer3)&&($answer1!=$answer4)&&($answer2!=$answer3)&&($answer2!=$answer4)&&($answer3!=$answer4)){
 			require("config.php");
 			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
