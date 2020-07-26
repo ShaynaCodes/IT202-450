@@ -84,7 +84,7 @@ if (Common::get($_POST, "submit", false)){
             }
             //end get 
 
-            die(header("Location: " . Common::url_for("home")));
+            die(header("Location: " . Common::url_for("survey")));
         }
         else{
             Common::flash(Common::get($result, "message", "Error logging in"));
