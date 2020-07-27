@@ -1,9 +1,9 @@
 <?php
 include_once(__DIR__."/partials/header.partial.php");
 
-//if(Common::is_logged_in()){
+if(Common::is_logged_in()){
     //this will auto redirect if user isn't logged in
-//}
+}
 if(isset($_GET["s"])){
     $questionnaire_id = $_GET["s"];
 }
@@ -70,6 +70,10 @@ if(Common::get($_POST, "submit", false)){
         $response = DBH::save_response($questionnaire_id, $response);
         if(Common::get($response, "status", 400) == 200){
             Common::flash("Successfully recorded response", "success");
+            $result = DBH::changePoints(Common::get_user_id(), 1, -1, "survey", "Thanks for taking this survey");
+            if(Common::get($result, "status", 400) == 200) {
+                Common::flash("You earned 1 point, thanks for participating!", "success");
+            }
         }
         else{
             Common::flash("Error recording response", "danger");

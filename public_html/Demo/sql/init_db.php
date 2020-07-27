@@ -1,57 +1,82 @@
 <?php
-require_once (__DIR__."/../includes/common.inc.php");
-$logged_in = Common::is_logged_in(false);
+#turn error reporting on
+ini_set('display_errors',1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+//pull in config.php so we can access the variables from it
+require_once (__DIR__ . "/../includes/common.inc.php");
+$count = 0;
+try{
+    //name each sql file in a way that it'll sort correctly to run in the correct order
+    //my samples prefix filenames with #_
+    /***
+     * Finds all .sql files in structure directory.
+     * Generates an array keyed by filename and valued as raw SQL from file
+     */
+    foreach(glob(__DIR__ . "/structure/*.sql") as $filename){
+        $sql[$filename] = file_get_contents($filename);
+    }
+    if(isset($sql) && $sql){
+        /***
+         * Sort the array so queries are executed in anticipated order.
+         * Be careful with naming, 1-9 is fine, 1-10 has 10 run after #1 due to string sorting.
+         */
+        ksort($sql);
+        echo "<br><pre>" . var_export($sql, true) . "</pre><br>";
+        //connect to DB
+        $db = $common->getDB();
+        /***
+         * Let's make this function a bit smarter to save DB calls for small dev plans
+         */
+        $stmt = $db->prepare("show tables");
+        $stmt->execute();
+        $count++;
+        $tables = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $t = [];
+        //convert it to a flat array
+        foreach($tables as $row){
+            foreach($row as $key => $value) {
+                array_push($t, $value);
+            }
+        }
+        foreach($sql as $key => $value){
+            echo "<br>Running: " . $key;
+            $lines = explode("(", $value, 2);
+            if(count($lines) > 0){
+                $line = $lines[0];
+                //clear out duplicate whitespace
+                $line = preg_replace('!\s+!', ' ', $line);
+                //remove create table command
+                $line = str_ireplace("create table", "", $line);
+                //remove if not exists command
+                $line = str_ireplace("if not exists", "", $line);
+                //remove backticks
+                $line = str_ireplace("`","",$line);
+                //trim whitespace in front and back
+                $line = trim($line);
+                if (in_array($line, $t)){
+                    echo "<br>Blocked from running, table found in 'show tables' results.<br>";
+                    continue;
+                }
+            }
+            $stmt = $db->prepare($value);
+            $result = $stmt->execute();
+            $count++;
+            $error = $stmt->errorInfo();
+            if($error && $error[0] !== '00000'){
+                echo "<br>Error:<pre>" . var_export($error,true) . "</pre><br>";
+            }
+            echo "<br>$key result: " . ($result>0?"Success":"Fail") . "<br>";
+        }
+        echo "<br> Init complete, used approximately $count db calls.<br>";
+    }
+    else{
+        echo "Didn't find any files, please check the directory/directory contents/permissions";
+    }
+    $db = null;
+}
+catch(Exception $e){
+    echo $e->getMessage();
+    exit("Something went wrong");
+}
 ?>
-<!-- Bootstrap 4 CSS only -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<!-- Include jQuery 3.5.1-->
-<script
-        src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-        crossorigin="anonymous"></script>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <ul class="navbar-nav mr-auto">
-        <?php if($logged_in):?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("home");?>">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("game");?>">Game</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("shop");?>">Shop</a>
-            </li>
-            <?php if (Common::has_role("Admin")):?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo Common::url_for("create_questionnaire");?>">Create Questionnaire</a>
-                </li>
-            <?php endif;?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("surveys");?>">Surveys</a>
-            </li>
-        <?php endif; ?>
-        <?php if(!$logged_in):?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("login");?>">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("register");?>">Register</a>
-            </li>
-        <?php else:?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("logout");?>">Logout</a>
-            </li>
-        <?php endif; ?>
-    </ul>
-</nav>
-<div id="messages">
-    <?php $flash_messages = Common::getFlashMessages();?>
-    <?php if(isset($flash_messages) && count($flash_messages) > 0):?>
-        <?php foreach($flash_messages as $msg):?>
-            <div class="alert alert-<?php echo Common::get($msg, "type");?>"><?php
-                echo Common::get($msg, "message");
-                //We have the opening and closing tags right after/before the div tags to remove any whitespace characters
-                ?></div>
-        <?php endforeach;?>
-    <?php endif;?>
-</div>

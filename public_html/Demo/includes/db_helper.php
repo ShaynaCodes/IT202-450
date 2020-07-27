@@ -89,8 +89,8 @@ public static function save_questionnaire($questionnaire){
         try {
             //Steps
             //create questionnaire
-            /*
-             * $questionnaire = [
+            
+              $questionnaire = [
                     "name"=>$questionnaire_name,
                     "description"=>$questionnaire_desc,
                     "attempts_per_day"=>$attempts_per_day,
@@ -98,7 +98,7 @@ public static function save_questionnaire($questionnaire){
                     "use_max"=>$use_max,
                     "questions"=>$questions
                     ];
-             */
+             
             $query = file_get_contents(__DIR__ . "/../sql/queries/create_questionnaire.sql");
             $stmt = DBH::getDB()->prepare($query);
             $stmt->execute([

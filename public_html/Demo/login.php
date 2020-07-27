@@ -1,50 +1,20 @@
 <?php
-include("header.php");
+include_once(__DIR__."/partials/header.partial.php");
 ?>
-<style>
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-input[type=submit] {
-  width: 100%;
-  background-color: #581845;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #4B113A;
-}
-
-div {
-  border-radius: 5px;
-  background-color: #FFF0F5;
-  padding: 20px;
-}
-</style>
-<h3><center><font size="24" color="#581845">Login</font></center></h3>
-<div>
-<form method="POST">
-	<label for="email">Email:<br>
-	<input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Must Enter an Email" required><br>
-	</label><br>
-	<label for="p">Password: <br>
-	<input type="password" id="p" name="password" autocomplete="off" title="Must Enter a password" required>
-	</label><br>
-	<input type="submit" name="login" value="Login"/>
-</form>
-</div>
+    <div>
+        <h4>Login</h4>
+        <form method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required min="3"/>
+            </div>
+            <input type="submit" name="submit" value="Login"/>
+        </form>
+    </div>
 <?php
 if (Common::get($_POST, "submit", false)){
     $email = Common::get($_POST, "email", false);
@@ -64,27 +34,27 @@ if (Common::get($_POST, "submit", false)){
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
             //end system user fetch
-            //get user questionnaires(s) and store in session, not necessary but saves extra DB calls later
-            $result = DBH::get_(Common::get_user_id());
+            //get user tank(s) and store in session, not necessary but saves extra DB calls later
+            $result = DBH::get_tanks(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
-                $questionnaires = Common::get($result, "data", []);
-                if(count($questionnaires) == 0) {
-                    //this section is needed to give any previously existing users a questionnaires that didn't have a questionnaires before
+                $tanks = Common::get($result, "data", []);
+                if(count($tanks) == 0) {
+                    //this section is needed to give any previously existing users a tank that didn't have a tank before
                     //this feature was created/added
                     $result = DBH::create_tank(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
-                        $result = DBH::get_(Common::get_user_id());
+                        $result = DBH::get_tanks(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
-                            $questionnaires = Common::get($result, "data", []);
+                            $tanks = Common::get($result, "data", []);
                         }
                     }
                 }
-                //finally let's save our  in session
-                $_SESSION["user"]["questionnaires"] = $questionnaires;
+                //finally let's save our tanks in session
+                $_SESSION["user"]["tanks"] = $tanks;
             }
-            //end get 
+            //end get tanks
 
-            die(header("Location: " . Common::url_for("surveys")));
+            die(header("Location: " . Common::url_for("home")));
         }
         else{
             Common::flash(Common::get($result, "message", "Error logging in"));
