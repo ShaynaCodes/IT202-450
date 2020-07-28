@@ -84,8 +84,8 @@ if(Common::get($_POST, "submit", false)){
                     break;
                 }
             }
-            //echo "<pre>" . var_export($questions, true) . "</pre>";
-            //echo "<pre>" . var_export($answers, true) . "</pre>";
+            echo "<pre>" . var_export($questions, true) . "</pre>";
+            echo "<pre>" . var_export($answers, true) . "</pre>";
             //TODO going to try to do this with as few db calls as I can
             //wrap it up so we can just pass one param to DBH
             $questionnaire = [

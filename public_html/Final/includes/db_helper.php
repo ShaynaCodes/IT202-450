@@ -1,3 +1,4 @@
+  
 <?php
 
 class DBH{
@@ -84,29 +85,15 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-
-public static function save_questionnaire($questionnaire){
+    public static function save_questionnaire($questionnaire){
         try {
-            //Steps
-            //create questionnaire
             
-              $questionnaire = [
-                    "name"=>$questionnaire_name,
-                    "description"=>$questionnaire_desc,
-                    "attempts_per_day"=>$attempts_per_day,
-                    "max_attempts"=>$max_attempts,
-                    "use_max"=>$use_max,
-                    "questions"=>$questions
-                    ];
-             
             $query = file_get_contents(__DIR__ . "/../sql/queries/create_questionnaire.sql");
             $stmt = DBH::getDB()->prepare($query);
             $stmt->execute([
                 ":name"=>Common::get($questionnaire, "name", null),
                 ":desc"=>Common::get($questionnaire, "description", null),
-                ":apd"=>Common::get($questionnaire, "attempts_per_day", 1),
                 ":ma"=>Common::get($questionnaire, "max_attempts", 1),
-                ":um"=>Common::get($questionnaire, "use_max", false)?1:0,//convert to tinyint
                 ":uid"=>Common::get_user_id()
             ]);
             DBH::verify_sql($stmt);
@@ -140,16 +127,16 @@ public static function save_questionnaire($questionnaire){
             //batch insert answers
             $qIndex = 0;
             $params = [];
-            $params[":user_id"] = Common::get_user_id();
+            //$params[":user_id"] = Common::get_user_id();
             $query = file_get_contents(__DIR__ . "/../sql/queries/create_answer.partial.sql");
             foreach($questions as $question){
                 $answers = Common::get($question, "answers", []);
-                $params[":question_id$qIndex"] = Common::get($results[$qIndex], "id", -1);
+                //$params[":question_id$qIndex"] = Common::get($results[$qIndex], "id", -1);
                 $aIndex = 0;
                 foreach($answers as $answer){
                     //TODO attempted named params. This would work, but I felt it was a bit messier to setup
-                    $params[":answer-$qIndex-$aIndex"] = Common::get($answer, "answer",'');
-                    $params[":oe-$qIndex-$aIndex"] = Common::get($answer, "open_ended", false)?1:0;
+                    // $params[":answer-$qIndex-$aIndex"] = Common::get($answer, "answer",'');
+                    //$params[":oe-$qIndex-$aIndex"] = Common::get($answer, "open_ended", false)?1:0;
                     if($qIndex > 0 || $aIndex > 0){
                         $query .= ",";
                     }
@@ -162,7 +149,7 @@ public static function save_questionnaire($questionnaire){
                         Common::get($question_ids[$qIndex], "id", -1)
                     );
 
-                    $query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
+                    //$query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
                     $aIndex++;
                 }
 
@@ -218,7 +205,7 @@ public static function save_questionnaire($questionnaire){
                 $result = $stmt->fetchAll(PDO::FETCH_GROUP);
                 error_log(var_export($result, true));
                 //TODO need to do some mapping
-                $questions = [];
+                /*$questions = [];
                 foreach($result as $row){
                     $q = Common::get($row, "question_id", -1);
                     if($q > -1){
@@ -233,7 +220,7 @@ public static function save_questionnaire($questionnaire){
                             $questions
                         }
                     }
-                }
+                }*/
                 return DBH::response($result,200, "success");
             }
             else{
