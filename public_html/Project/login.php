@@ -1,91 +1,69 @@
 <?php
-include("header.php");
+include_once(__DIR__."/partials/header.partial.php");
 ?>
-<style>
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-input[type=submit] {
-  width: 100%;
-  background-color: #581845;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #4B113A;
-}
-
-div {
-  border-radius: 5px;
-  background-color: #FFF0F5;
-  padding: 20px;
-}
-</style>
-<h3><center><font size="24" color="#581845">Login</font></center></h3>
-<div>
-<form method="POST">
-	<label for="email">Email:<br>
-	<input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Must Enter an Email" required><br>
-	</label><br>
-	<label for="p">Password: <br>
-	<input type="password" id="p" name="password" autocomplete="off" title="Must Enter a password" required>
-	</label><br>
-	<input type="submit" name="login" value="Login"/>
-</form>
-</div>
+    <div>
+        <h4>Login</h4>
+        <form method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required min="3"/>
+            </div>
+            <input type="submit" name="submit" value="Login"/>
+        </form>
+    </div>
 <?php
+if (Common::get($_POST, "submit", false)){
+    $email = Common::get($_POST, "email", false);
+    $password = Common::get($_POST, "password", false);
+    if(!empty($email) && !empty($password)){
+        $result = DBH::login($email, $password);
+        echo var_export($result, true);
+        if(Common::get($result, "status", 400) == 200){
+            $_SESSION["user"] = Common::get($result, "data", NULL);
 
-//echo var_export($_GET, true);
-//echo var_export($_POST, true);
-//echo var_export($_REQUEST, true);
-if(isset($_POST["login"])){
-	if(isset($_POST["password"]) && isset($_POST["email"])){
-		$password = $_POST["password"];
-		$email = $_POST["email"];
-		require("config.php");
-			$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
-			try{
-				$db = new PDO($connection_string, $dbuser, $dbpass);
-				$stmt = $db->prepare("SELECT * FROM Users where email = :email LIMIT 1");
-				$stmt->execute(array(
-					":email" => $email
-				));
-				$e = $stmt->errorInfo();
-				if($e[0] != "00000"){
-					echo var_export($e, true);
-				}
-				else{
-					$result = $stmt->fetch(PDO::FETCH_ASSOC);
-					if ($result){
-						$rpassword = $result["password"];
-						if(password_verify($password, $rpassword)){
-							echo "<div>Passwords matched! You are technically logged in!</div>";
-						}
-						else{
-							echo "<div>Invalid password!</div>";
-						}
-					}
-					else{
-						echo "<div>Invalid user</div>";
-					}
-					//echo "<div>Successfully registered!</div>";
-				}
-			}
-			catch (Exception $e){
-				echo $e->getMessage();
-			}
-	}
+            //fetch system user id and put it in session to reduce DB calls to fetch it when we need
+            //to generate points from activity on the app
+            $result = DBH::get_system_user_id();
+            $result = Common::get($result, "data", false);
+            if($result) {
+                $_SESSION["system_id"] = Common::get($result, "id", -1);
+                error_log("Got system_id " . $_SESSION["system_id"]);
+            }
+            //end system user fetch
+            //get user tank(s) and store in session, not necessary but saves extra DB calls later
+            $result = DBH::get_tanks(Common::get_user_id());
+            if(Common::get($result, "status", 400) == 200){
+                $tanks = Common::get($result, "data", []);
+                if(count($tanks) == 0) {
+                    //this section is needed to give any previously existing users a tank that didn't have a tank before
+                    //this feature was created/added
+                    $result = DBH::create_tank(Common::get_user_id());
+                    if (Common::get($result, "status", 400) == 200) {
+                        $result = DBH::get_tanks(Common::get_user_id());
+                        if (Common::get($result, "status", 400) == 200) {
+                            $tanks = Common::get($result, "data", []);
+                        }
+                    }
+                }
+                //finally let's save our tanks in session
+                $_SESSION["user"]["tanks"] = $tanks;
+            }
+            //end get tanks
+
+            die(header("Location: " . Common::url_for("home")));
+        }
+        else{
+            Common::flash(Common::get($result, "message", "Error logging in"));
+            die(header("Location: " . Common::url_for("login")));
+        }
+    }
+    else{
+        Common::flash("Email and password must not be empty", "warning");
+        die(header("Location: " . Common::url_for("login")));
+    }
 }
 ?>
