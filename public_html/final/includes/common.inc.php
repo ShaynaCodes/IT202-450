@@ -35,10 +35,10 @@ class Common {
                 if($started < $now) {
                     //https://stackoverflow.com/a/12520198
                     //$started can't be from the future
-                    $diff = $started->diff(new DateTime());
+                    //$diff = $started->diff(new DateTime());
                     //changed to seconds, helps filter fake requests yet account for poor play
-                    $minutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
-                    return $minutes;
+                    //$minutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
+                    //return $minutes;
                     return $now->getTimestamp() - $started->getTimestamp();
                 }
             }
@@ -184,7 +184,7 @@ class Common {
             $_SESSION["messages"] = [];
         }
         array_push($_SESSION["messages"], ["message"=>$message, "type"=>$type]);
-        error_log(var_export($_SESSION["messages"], true));
+        //error_log(var_export($_SESSION["messages"], true));
     }
 
     /*** Returns all messaged stored on the session.
@@ -193,7 +193,7 @@ class Common {
      */
     public static function getFlashMessages() {
         $messages = Common::get($_SESSION, "messages", []);
-       error_log("Get Flash Messages(): " . var_export($messages, true));
+       //error_log("Get Flash Messages(): " . var_export($messages, true));
         $_SESSION["messages"] = [];
         return $messages;
     }
