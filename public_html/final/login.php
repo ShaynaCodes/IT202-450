@@ -38,6 +38,12 @@ if(isset($_POST["login"])){
 						$rpassword = $result["password"];
 						if(password_verify($password, $rpassword)){
 							echo "<div>Passwords matched! You are technically logged in!</div>";
+							$_SESSION["user"] = array(
+								"id"=>$result["id"],
+								"email"=>$result["email"],
+							);
+							echo var_export($_SESSION, true);
+							echo "<a href='surveys.php'>Go to surveys page</a>";
 						}
 						else{
 							echo "<div>Invalid password!</div>";
