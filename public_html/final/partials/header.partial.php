@@ -13,37 +13,7 @@ $logged_in = Common::is_logged_in(false);
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <ul class="navbar-nav mr-auto">
-        <?php if($logged_in):?>
-       <li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("surveys");?>">Surveys</a>
-        </li>
-		<li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("create_questionnaire");?>">Create</a>
-        </li>
-		<li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("survey");?>">Survey</a>
-        </li>
-        <?php if (Common::has_role("Admin")):?>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("create_questionnaire");?>">Create Questionnaire</a>
-        </li>
-        <?php endif;?>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("surveys");?>">Surveys</a>
-        </li>
-        <?php endif; ?>
-        <?php if(!$logged_in):?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("login");?>">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("register");?>">Register</a>
-            </li>
-        <?php else:?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo Common::url_for("logout");?>">Logout</a>
-            </li>
-        <?php endif; ?>
+     
     </ul>
 </nav>
 <div id="messages">
