@@ -1,5 +1,5 @@
 <?php
-require_once (__DIR__."/../includes/common.inc.php");
+//require_once (__DIR__."/../includes/common.inc.php");
 $logged_in = Common::is_logged_in(false);
 ?>
 <!-- Bootstrap 4 CSS only -->
