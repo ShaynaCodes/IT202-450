@@ -11,14 +11,3 @@ $logged_in = Common::is_logged_in(false);
      
     </ul>
 </nav>
-<div id="messages">
-    <?php $flash_messages = Common::getFlashMessages();?>
-    <?php if(isset($flash_messages) && count($flash_messages) > 0):?>
-        <?php foreach($flash_messages as $msg):?>
-            <div class="alert alert-<?php echo Common::get($msg, "type");?>"><?php
-                echo Common::get($msg, "message");
-                //We have the opening and closing tags right after/before the div tags to remove any whitespace characters
-                ?></div>
-        <?php endforeach;?>
-    <?php endif;?>
-</div>
