@@ -4,14 +4,14 @@ include_once(__DIR__."/partials/header.partial.php");
 if(Common::is_logged_in()){
     //this will auto redirect if user isn't logged in
     if(!Common::has_role("Admin")){
-        die(header("Location: surveys.php"));
+        die(header("Location: home.php"));
     }
 }
 $last_updated = Common::get($_SESSION, "last_sync", false);
 ?>
 <?php
 if(Common::get($_POST, "submit", false)){
-    echo "<pre>" . var_export($_POST, true) . "</pre>";
+    //echo "<pre>" . var_export($_POST, true) . "</pre>";
     //TODO this isn't going to be the best way to parse the form, and probably not the best form setup
     //so just use this as an example rather than what you should do.
     //this is based off of naming conversions used in Python WTForms (I like to try to see if I can get some
@@ -84,8 +84,8 @@ if(Common::get($_POST, "submit", false)){
                     break;
                 }
             }
-            echo "<pre>" . var_export($questions, true) . "</pre>";
-            echo "<pre>" . var_export($answers, true) . "</pre>";
+            //echo "<pre>" . var_export($questions, true) . "</pre>";
+            //echo "<pre>" . var_export($answers, true) . "</pre>";
             //TODO going to try to do this with as few db calls as I can
             //wrap it up so we can just pass one param to DBH
             $questionnaire = [

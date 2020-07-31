@@ -50,11 +50,27 @@ class Common {
         return -1;
     }
 
-   
-  
+    /*** Basis of anti cheating check, still WIP
+     * @param $isWin
+     * @return bool
+     */
+    public static function is_valid_game($isWin){
+        $seconds = Common::get_seconds_since_start();
+        error_log("Seconds $seconds");
+        $min = 10;//Make sure game has been played a significant amount of time
+        if(!$isWin){
+            $min = 5;//hopefully the player survives longer than 5 seconds.
+        }
+        error_log("Is win $isWin");
+        $max = 3600;//make sure it has been started within 60 mins
+        //adjust the above constraints as necessary to reduce some basic cheats
+        //a game shouldn't be finished in under a set amount of seconds and
+        //a game shouldn't take an hour to complete
+        error_log("min $min max $max");
+        return ($seconds >= $min && $seconds <= $max);
+    }
     public static function is_logged_in($redirect = true){
         if(Common::get($_SESSION, "user", false)){
-			echo "This works";
             return true;
         }
         if($redirect){
@@ -108,7 +124,7 @@ class Common {
             return $r[1];
         }
         Common::flash("Error finding path", "danger");
-        return "/final/index.php";
+        return "/project/index.php";
     }
 
     /*** Pass a single role to check if the logged in user has the role applied
@@ -231,6 +247,4 @@ class Common {
 
 $common = new Common();
 //make sure this is after we init common so it has access to it
-require_once (__DIR__."/includes/db_helper.php");
-
-?>
+require_once (__DIR__."/db_helper.php");

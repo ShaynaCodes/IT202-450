@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__."/partials/header.partial.php");
 ?>
-    <div>
+    <div class="container-fluid">
         <h4>Login</h4>
         <form method="POST">
             <div>
@@ -33,13 +33,15 @@ if (Common::get($_POST, "submit", false)){
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
-			$result = DBH::get_available_questionnaires(Common::get_user_id());
+            //end system user fetch
+            //get user tank(s) and store in session, not necessary but saves extra DB calls later
+            $result = DBH::get_tanks(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $tanks = Common::get($result, "data", []);
-                if(count($questionnaires) == 0) {
+                if(count($tanks) == 0) {
                     //this section is needed to give any previously existing users a tank that didn't have a tank before
                     //this feature was created/added
-                    $result = DBH::create_questionnaires(Common::get_user_id());
+                    $result = DBH::create_tank(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
                         $result = DBH::get_tanks(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
@@ -48,11 +50,11 @@ if (Common::get($_POST, "submit", false)){
                     }
                 }
                 //finally let's save our tanks in session
-                $_SESSION["user"]["questionnaires"] = $questionnaires;
+                $_SESSION["user"]["tanks"] = $tanks;
             }
-           
+            //end get tanks
 
-            die(header("Location: " . Common::url_for("surveys")));
+            die(header("Location: " . Common::url_for("dashboard")));
         }
         else{
             Common::flash(Common::get($result, "message", "Error logging in"));
