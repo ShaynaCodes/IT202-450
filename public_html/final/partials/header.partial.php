@@ -15,7 +15,13 @@
  <ul class="navbar-nav mr-auto">
         <?php if($logged_in):?>
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("survey");?>">Surveys</a>
+            <a class="nav-link" href="<?php echo Common::url_for("survey");?>">Survey</a>
+        </li>
+		 <li class="nav-item">
+            <a class="nav-link" href="<?php echo Common::url_for("results");?>">Results</a>
+        </li>
+		 <li class="nav-item">
+            <a class="nav-link" href="<?php echo Common::url_for("surveys");?>">Surveys</a>
         </li>
         <?php if (Common::has_role("Admin")):?>
         <li class="nav-item">

@@ -109,7 +109,7 @@ class DBH{
             //Steps
             //create questionnaire
             
-             * $questionnaire = [
+             /* $questionnaire = [
                     "name"=>$questionnaire_name,
                     "description"=>$questionnaire_desc,
                     "attempts_per_day"=>$attempts_per_day,
@@ -117,7 +117,7 @@ class DBH{
                     "use_max"=>$use_max,
                     "questions"=>$questions
                     ];
-             
+             */
             $query = file_get_contents(__DIR__ . "/../sql/queries/create_questionnaire.sql");
             $stmt = DBH::getDB()->prepare($query);
             $stmt->execute([
@@ -181,7 +181,7 @@ class DBH{
                         Common::get($question_ids[$qIndex], "id", -1)
                     );
 
-                    $query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
+                  //  $query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
                     $aIndex++;
                 }
 
@@ -225,7 +225,28 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-    public static function get_questionnaire_by_id($questionnaire_id){
+     public static function get_questionnaire_by_id($questionnaire_id){
+        try {
+            //need to use a workaround for PDO
+            $query = file_get_contents(__DIR__ . "/../sql/queries/get_questionnaire.sql");
+            $stmt = DBH::getDB()->prepare($query);
+            $result = $stmt->execute([":questionnaire_id"=>$questionnaire_id]);//not using associative array here
+            DBH::verify_sql($stmt);
+            if ($result) {
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                error_log(var_export($result, true));
+                return DBH::response($result,200, "success");
+            }
+            else{
+                return DBH::response($result,400, "error");
+            }
+        }
+        catch(Exception $e){
+            error_log($e->getMessage());
+            return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
+        }
+    }
+	 public static function get_full_questionnaire_by_id($questionnaire_id){
         try {
             //need to use a workaround for PDO
             $query = file_get_contents(__DIR__ . "/../sql/queries/get_full_questionnaire.sql");
@@ -237,7 +258,7 @@ class DBH{
                 $result = $stmt->fetchAll(PDO::FETCH_GROUP);
                 error_log(var_export($result, true));
                 //TODO need to do some mapping
-                $questions = [];
+                /*$questions = [];
                 foreach($result as $row){
                     $q = Common::get($row, "question_id", -1);
                     if($q > -1){
@@ -252,7 +273,7 @@ class DBH{
                             $questions
                         }
                     }
-                }
+                }*/
                 return DBH::response($result,200, "success");
             }
             else{
