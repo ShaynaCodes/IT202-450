@@ -28,9 +28,6 @@ $logged_in = Common::is_logged_in(false);
             <a class="nav-link" href="<?php echo Common::url_for("create_questionnaire");?>">Create Questionnaire</a>
         </li>
         <?php endif;?>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("surveys");?>">Surveys</a>
-        </li>
         <?php endif; ?>
         <?php if(!$logged_in):?>
             <li class="nav-item">
@@ -45,11 +42,6 @@ $logged_in = Common::is_logged_in(false);
             </li>
         <?php endif; ?>
     </ul>
-    <?php if($logged_in):?>
-    <span class="navbar-text">
-      Balance: <?php echo Common::get($_SESSION["user"], "points", 0);?>
-    </span>
-    <?php endif;?>
 </nav>
 <div id="messages">
     <?php $flash_messages = Common::getFlashMessages();?>
