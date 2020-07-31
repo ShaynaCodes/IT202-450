@@ -35,26 +35,26 @@ if (Common::get($_POST, "submit", false)){
             }
             //end system user fetch
             //get user tank(s) and store in session, not necessary but saves extra DB calls later
-            $result = DBH::get_tanks(Common::get_user_id());
+            $result = DBH::get_questionnaire(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
-                $tanks = Common::get($result, "data", []);
-                if(count($tanks) == 0) {
+                $questionnaires = Common::get($result, "data", []);
+                if(count($questionnaire) == 0) {
                     //this section is needed to give any previously existing users a tank that didn't have a tank before
                     //this feature was created/added
-                    $result = DBH::create_tank(Common::get_user_id());
+                    $result = DBH::create_questionnaire(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
-                        $result = DBH::get_tanks(Common::get_user_id());
+                        $result = DBH::get_questionnaire(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
                             $tanks = Common::get($result, "data", []);
                         }
                     }
                 }
-                //finally let's save our tanks in session
-                $_SESSION["user"]["tanks"] = $tanks;
+             
+                $_SESSION["user"]["questionnaire"] = $tanks;
             }
             //end get tanks
 
-            die(header("Location: " . Common::url_for("dashboard")));
+            die(header("Location: " . Common::url_for("surveys")));
         }
         else{
             Common::flash(Common::get($result, "message", "Error logging in"));
