@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include_once(__DIR__."/partials/header.partial.php");
+include_once(__DIR__."/final/partials/header.partial.php");
 ?>
 <div class="jumbotron">
     <h1 class="display-4">Welcome to <u>Tanks For Playing!</u></h1>

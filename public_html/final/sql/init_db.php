@@ -4,7 +4,7 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //pull in config.php so we can access the variables from it
-require_once (__DIR__ . "/../includes/common.inc.php");
+require_once (__DIR__ . "/final/includes/common.inc.php");
 $count = 0;
 try{
     //name each sql file in a way that it'll sort correctly to run in the correct order

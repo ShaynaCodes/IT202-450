@@ -108,7 +108,7 @@ class Common {
             return $r[1];
         }
         Common::flash("Error finding path", "danger");
-        return "/project/index.php";
+        return "/final/index.php";
     }
 
     /*** Pass a single role to check if the logged in user has the role applied
@@ -231,4 +231,4 @@ class Common {
 
 $common = new Common();
 //make sure this is after we init common so it has access to it
-require_once (__DIR__."/db_helper.php");
+require_once (__DIR__."/final/includes/db_helper");
