@@ -231,4 +231,6 @@ class Common {
 
 $common = new Common();
 //make sure this is after we init common so it has access to it
-require_once (__DIR__."/final/includes/db_helper");
+require_once (__DIR__."/final/includes/db_helper.php");
+
+?>
