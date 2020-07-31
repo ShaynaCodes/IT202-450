@@ -50,13 +50,11 @@ class Common {
         return -1;
     }
 
-    /*** Basis of anti cheating check, still WIP
-     * @param $isWin
-     * @return bool
-     */
+   
   
     public static function is_logged_in($redirect = true){
         if(Common::get($_SESSION, "user", false)){
+			echo "This works";
             return true;
         }
         if($redirect){
