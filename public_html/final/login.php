@@ -16,7 +16,7 @@ include_once(__DIR__."/partials/header.partial.php");
         </form>
     </div>
 <?php
-if (Common::get($_POST, "submit", false)){
+/*if (Common::get($_POST, "submit", false)){
     $email = Common::get($_POST, "email", false);
     $password = Common::get($_POST, "password", false);
     if(!empty($email) && !empty($password)){
@@ -45,5 +45,5 @@ if (Common::get($_POST, "submit", false)){
         Common::flash("Email and password must not be empty", "warning");
         die(header("Location: " . Common::url_for("login")));
     }
-}
+}*/
 ?>
