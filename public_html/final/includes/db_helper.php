@@ -85,7 +85,7 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-    public static function get_system_user_id(){
+  static function get_system_user_id(){
         try {
             $query = file_get_contents(__DIR__ . "/../sql/queries/login.sql");
             $stmt = DBH::getDB()->prepare($query);
@@ -104,12 +104,13 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
+
     public static function save_questionnaire($questionnaire){
         try {
             //Steps
             //create questionnaire
-            
-             /* $questionnaire = [
+            /*
+             * $questionnaire = [
                     "name"=>$questionnaire_name,
                     "description"=>$questionnaire_desc,
                     "attempts_per_day"=>$attempts_per_day,
@@ -159,7 +160,7 @@ class DBH{
             //batch insert answers
             $qIndex = 0;
             $params = [];
-            $params[":user_id"] = Common::get_user_id();
+            //$params[":user_id"] = Common::get_user_id();
             $query = file_get_contents(__DIR__ . "/../sql/queries/create_answer.partial.sql");
             foreach($questions as $question){
                 $answers = Common::get($question, "answers", []);
@@ -167,8 +168,8 @@ class DBH{
                 $aIndex = 0;
                 foreach($answers as $answer){
                     //TODO attempted named params. This would work, but I felt it was a bit messier to setup
-                    $params[":answer-$qIndex-$aIndex"] = Common::get($answer, "answer",'');
-                    $params[":oe-$qIndex-$aIndex"] = Common::get($answer, "open_ended", false)?1:0;
+                    // $params[":answer-$qIndex-$aIndex"] = Common::get($answer, "answer",'');
+                    //$params[":oe-$qIndex-$aIndex"] = Common::get($answer, "open_ended", false)?1:0;
                     if($qIndex > 0 || $aIndex > 0){
                         $query .= ",";
                     }
@@ -181,7 +182,7 @@ class DBH{
                         Common::get($question_ids[$qIndex], "id", -1)
                     );
 
-                  //  $query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
+                    //$query .= "(:answer-$qIndex-$aIndex, :oe-$qIndex-$aIndex, :user_id, :question_id$qIndex)";
                     $aIndex++;
                 }
 
@@ -225,7 +226,7 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-     public static function get_questionnaire_by_id($questionnaire_id){
+    public static function get_questionnaire_by_id($questionnaire_id){
         try {
             //need to use a workaround for PDO
             $query = file_get_contents(__DIR__ . "/../sql/queries/get_questionnaire.sql");
@@ -246,7 +247,7 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-	 public static function get_full_questionnaire_by_id($questionnaire_id){
+    public static function get_full_questionnaire_by_id($questionnaire_id){
         try {
             //need to use a workaround for PDO
             $query = file_get_contents(__DIR__ . "/../sql/queries/get_full_questionnaire.sql");
@@ -342,5 +343,24 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
+    public static function get_stats_for_questionnaire($questionnaire_id){
+        try{
+            $query = file_get_contents(__DIR__ . "/../sql/queries/get_stats_for_questionnaire.sql");
+            $stmt = DBH::getDB()->prepare($query);
+            $result = $stmt->execute([":qid"=>$questionnaire_id]);
+            DBH::verify_sql($stmt);
+            if($result){
+                $results = $stmt->fetchAll(PDO::FETCH_GROUP);
+                return DBH::response($results,200, "success");
+            }
+            else{
+                return DBH::response(NULL, 400, "error");
+            }
+        }
+        catch(Exception $e){
+            error_log($e->getMessage());
+            return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
+        }
+    }
+    
 }
-   

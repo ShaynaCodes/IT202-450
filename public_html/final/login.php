@@ -16,7 +16,7 @@ include_once(__DIR__."/partials/header.partial.php");
         </form>
     </div>
 <?php
-/*if (Common::get($_POST, "submit", false)){
+if (Common::get($_POST, "submit", false)){
     $email = Common::get($_POST, "email", false);
     $password = Common::get($_POST, "password", false);
     if(!empty($email) && !empty($password)){
@@ -33,6 +33,24 @@ include_once(__DIR__."/partials/header.partial.php");
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
+			$result = DBH::get_available_questionnaires(Common::get_user_id());
+            if(Common::get($result, "status", 400) == 200){
+                $tanks = Common::get($result, "data", []);
+                if(count($questionnaires) == 0) {
+                    //this section is needed to give any previously existing users a tank that didn't have a tank before
+                    //this feature was created/added
+                    $result = DBH::create_questionnaires(Common::get_user_id());
+                    if (Common::get($result, "status", 400) == 200) {
+                        $result = DBH::get_tanks(Common::get_user_id());
+                        if (Common::get($result, "status", 400) == 200) {
+                            $tanks = Common::get($result, "data", []);
+                        }
+                    }
+                }
+                //finally let's save our tanks in session
+                $_SESSION["user"]["questionnaires"] = $questionnaires;
+            }
+           
 
             die(header("Location: " . Common::url_for("surveys")));
         }
@@ -45,5 +63,5 @@ include_once(__DIR__."/partials/header.partial.php");
         Common::flash("Email and password must not be empty", "warning");
         die(header("Location: " . Common::url_for("login")));
     }
-}*/
+}
 ?>
