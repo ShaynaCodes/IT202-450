@@ -35,15 +35,15 @@ if (Common::get($_POST, "submit", false)){
             }
             //end system user fetch
             //get user tank(s) and store in session, not necessary but saves extra DB calls later
-            $result = DBH::get_available_surveys(Common::get_user_id());
+            $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
-                $surveys = Common::get($result, "data", []);
-                if(count($surveys) == 0) {
+                $role = Common::get($result, "data", []);
+                if(count($role) == 0) {
                     //this section is needed to give any previously existing users a tank that didn't have a tank before
                     //this feature was created/added
                     $result = DBH::create_questionnaire(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
-                        $result = DBH::get_available_surveys(Common::get_user_id());
+                        $result = DBH::get_roles(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
                             $surveys = Common::get($result, "data", []);
                         }
