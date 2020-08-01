@@ -134,8 +134,8 @@ class Common {
     public static function has_role($role){
         $user = Common::get($_SESSION, "user", false);
         if($user){
-            $roles = Common::get($user, "roles", []);
-            foreach($roles as $r){
+            $role = Common::get($user, "role", []);
+            foreach($role as $r){
                 if($r["name"] == $role){
                     return true;
                 }
