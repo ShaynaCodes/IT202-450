@@ -39,9 +39,9 @@ if (Common::get($_POST, "submit", false)){
             $data = Common::get($result, "data", []);
             $id = Common::get($data,"user_id", -1);
             if($id > -1) {
-                $result = DBH::changePoints($id, 10, -1, "earned", "Welcome bonus");
+                $result = DBH::check_survey_status($id, 10, -1, "earned", "Welcome");
                 if(Common::get($result, "status", 400) == 200){
-                    Common::flash("Here's 10 free points for the shop to start you off!", "success");
+                    Common::flash("You can now create and participate in Surveys!", "success");
                 }
             }
             die(header("Location: " . Common::url_for("login")));
