@@ -50,7 +50,7 @@ if (Common::get($_POST, "submit", false)){
                     }
                 }
              
-                $_SESSION["user"]["roles"] = "admin";
+                $_SESSION["users"]["role"] = "admin";
             }
             //end get tanks
 
