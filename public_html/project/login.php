@@ -34,7 +34,7 @@ if (Common::get($_POST, "submit", false)){
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
       
-         /*  $result = DBH::get_roles(Common::get_user_id());
+           $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
                 if($role == "admin") {
@@ -48,7 +48,7 @@ if (Common::get($_POST, "submit", false)){
                 }
 			}
 			$result = DBH::get_roles(Common::get_user_id());
-			*/
+			
 			}
             //end get tanks
 
