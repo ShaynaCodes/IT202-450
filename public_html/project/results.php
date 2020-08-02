@@ -1,26 +1,25 @@
 <?php
 include_once(__DIR__."/partials/header.partial.php");
 if(Common::is_logged_in()) {
-    $questionnaire_id = Common::get($_GET, "questionnaire_id", -1);
+    $survey_id = Common::get($_GET, "survey_id", -1);
     $stats = [];
-    if ($questionnaire_id > -1) {
-        $result = DBH::get_stats_for_questionnaire($questionnaire_id);
+    if ($survey_id > -1) {
+        $result = DBH::get_stats_for_questionnaire($survey_id);
         if(Common::get($result, "status", 400) == 200){
             $stats = Common::get($result, "data", []);
             error_log(var_export($stats, true));
         }
         //not really necessary if the above call is crafted well, but got lazy here
-        $result = DBH::get_questionnaire_by_id($questionnaire_id);
+        $result = DBH::get_questionnaire_by_id($survey_id);
         if(Common::get($result, "status", 400) == 200){
-            $questionnaire_id = Common::get($result, "data", []);
-            if(count($questionnaire) == 1){
-                $questionnaire = $questionnaire[0];
+            $survey = Common::get($result, "data", []);
+            if(count($survey) == 1){
+                $survey = $survey[0];
             }
-            error_log(var_export($questionnaire, true));
+            error_log(var_export($survey, true));
         }
     }
 }
-?>
 <div class="container-fluid">
 <h3><?php echo Common::get($questionnaire, "name", "");?></h3>
 <h5><?php echo Common::get($questionnaire, "description", "");?></h5>

@@ -33,7 +33,7 @@ if (Common::get($_POST, "submit", false)){
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
-			$result = DBH::get_roles($role);
+			$result = DBH::has_role($role);
             if(Common::get($result, "status", 400) == 200){
 				$role = Common::get($result, "data", []);
 				if($role == "admin")
