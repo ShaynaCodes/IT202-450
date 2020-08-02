@@ -34,8 +34,8 @@ if (Common::get($_POST, "submit", false)){
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
       
-           $result = DBH::get_roles(Common::get_user_id());
-            if(Common::get($result, "status", 400) == 200){
+            $result = DBH::get_roles(Common::get_user_id());
+           /* if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
                 if($role == "admin") {
                     $result = DBH::create_questionnaire(Common::get_user_id());
@@ -46,10 +46,9 @@ if (Common::get($_POST, "submit", false)){
                         }
                     }
                 }
-			}
-			$result = DBH::get_roles(Common::get_user_id());
-			
-			}
+             
+                $_SESSION["user"]["role"] = "admin";
+            }*/
             //end get tanks
 
             die(header("Location: " . Common::url_for("surveys")));
@@ -63,5 +62,5 @@ if (Common::get($_POST, "submit", false)){
         Common::flash("Email and password must not be empty", "warning");
         die(header("Location: " . Common::url_for("login")));
     }
-
+}
 ?>
