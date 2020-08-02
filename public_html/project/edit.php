@@ -1,60 +1,46 @@
 <?php
-require("config.php");
-$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
-$db = new PDO($connection_string, $dbuser, $dbpass);
 $id = -1;
-$result = array();
-function get($arr, $key){
-    if(isset($arr[$key])){
-        return $arr[$key];
-    }
-    return "";
-}
-if(isset($_GET["id"])){
+if(isset($_GET["id"]) && !empty($_GET["id"])){
     $id = $_GET["id"];
-    $stmt = $db->prepare("SELECT * FROM Users where id = :id");
-    $stmt->execute([":id"=>$id]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 }
-else{
-    echo "No id provided in url, don't forget this or sample won't work.";
-}
+$result = array();
+require("common.inc.php");
 ?>
-
-<form method="POST">
-	<label for="email">Email:
-	<input type="email" id="email" name="email" value="<?php echo get($result, "email");?>" />
-	</label>
-	<label for="q">Password:
-	<input type="password" id="password" name="password" value="<?php echo get($result, "password");?>" />
-	</label>
-	<input type="submit" name="updated" value="Update Email/Password"/>
-</form>
-
 <?php
 if(isset($_POST["updated"])){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    if(!empty($email) && !empty($password)){
+    $email = "";
+    $first_name = "";
+    if(isset($_POST["emial"]) && !empty($_POST["email"])){
+        $email = $_POST["email"];
+    }
+    if(isset($_POST["first_name"]) && !empty($_POST["first_name"])){
+        $first_name = $_POST["first_name"];
+    }
+    if(!empty($email) && !empty($first_name){
         try{
-            $stmt = $db->prepare("UPDATE Users set email = :email, password=:password where id=:id");
-            $result = $stmt->execute(array(
-                ":email" => $email,
-                ":password" => $password,
-                ":id" => $id
-            ));
-            $e = $stmt->errorInfo();
-            if($e[0] != "00000"){
-                echo var_export($e, true);
+            $query = NULL;
+            echo "[first_name" . $first_name . "]";
+            $query = file_get_contents(__DIR__ . "/queries/UPDATE_TABLE_THINGS.sql");
+            if(isset($query) && !empty($query)) {
+                $stmt = getDB()->prepare($query);
+                $result = $stmt->execute(array(
+                    ":email" => $email,
+                    ":first_name" => $first_name,
+                    ":id" => $id
+                ));
+                $e = $stmt->errorInfo();
+                if ($e[0] != "00000") {
+                    echo var_export($e, true);
+                } else {
+                    if ($result) {
+                        echo "Successfully updated User: " . $email;
+                    } else {
+                        echo "Error updating record";
+                    }
+                }
             }
             else{
-                echo var_export($result, true);
-                if ($result){
-                    echo "Successfully updated Users: " . $email;
-                }
-                else{
-                    echo "Error updating record";
-                }
+                echo "Failed to find UPDATE_TABLE_THINGS.sql file";
             }
         }
         catch (Exception $e){
@@ -62,7 +48,46 @@ if(isset($_POST["updated"])){
         }
     }
     else{
-        echo "Email and Password must not be empty.";
+        echo "Email and First Name must not be empty.";
     }
 }
 ?>
+
+<?php
+//moved the content down here so it pulls the update from the table without having to refresh the page or redirect
+//now my success message appears above the form so I'd have to further restructure my code to get the desired output/layout
+if($id > -1){
+    $query = file_get_contents(__DIR__ . "/queries/SELECT_ONE_TABLE_THINGS.sql");
+    if(isset($query) && !empty($query)) {
+        //Note: SQL File contains a "LIMIT 1" although it's not necessary since ID should be unique (i.e., one record)
+        try {
+            $stmt = getDB()->prepare($query);
+            $stmt->execute([":id" => $id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        catch (Exception $e){
+            echo $e->getMessage();
+        }
+    }
+    else{
+        echo "Failed to find SELECT_ONE_TABLE_THINGS.sql file";
+    }
+}
+else{
+    echo "No id provided in url, don't forget this or sample won't work.";
+}
+?>
+<script src="js/script.js"></script>
+<!-- note although <script> tag "can" be self terminating some browsers require the
+full closing tag-->
+<form method="POST"onsubmit="return validate(this);">
+<label for="thing">Email:
+    <!-- since the last assignment we added a required attribute to the form elements-->
+    <input type="email" id="email" name="email" value="<?php echo get($result, "email");?>" required />
+</label>
+<label for="q">First Name:
+    <!-- We also added a minimum value for our number field-->
+    <input type="FN" id="FN" name="FN" value="<?php echo get($result, "first_name");?>" required min="0"/>
+</label>
+<input type="submit" name="updated" value="Update Users"/>
+</form>
