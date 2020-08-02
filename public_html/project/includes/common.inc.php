@@ -136,7 +136,7 @@ class Common {
         if($user){
             $role = Common::get($user, "role", []);
             foreach($role as $r){
-                if($r["name"] == $role){
+                if($r["admin"] == $role){
                     return true;
                 }
             }
