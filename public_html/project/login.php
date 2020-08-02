@@ -48,7 +48,7 @@ if (Common::get($_POST, "submit", false)){
                 }
              
                 $_SESSION["user"]["role"] = "admin";
-            }*
+            }
             //end get tanks
 
             die(header("Location: " . Common::url_for("surveys")));
