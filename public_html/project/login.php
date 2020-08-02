@@ -16,10 +16,6 @@ include_once(__DIR__."/partials/header.partial.php");
         </form>
     </div>
 <?php
-
-//echo var_export($_GET, true);
-//echo var_export($_POST, true);
-//echo var_export($_REQUEST, true);
 if (Common::get($_POST, "submit", false)){
     $email = Common::get($_POST, "email", false);
     $password = Common::get($_POST, "password", false);
@@ -50,9 +46,30 @@ if (Common::get($_POST, "submit", false)){
                         }
                     }
                 }
-             
-                $_SESSION["user"]["role"] = "admin";
-            }
+			require("config.php");
+				$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
+			try{
+				$db = new PDO($connection_string, $dbuser, $dbpass);
+				$stmt = $db->prepare("SELECT * FROM Users where role = :role LIMIT 1");
+				$stmt->execute(array(
+					":role" => $role
+				));
+				$e = $stmt->errorInfo();
+				if($e[0] != "00000"){
+					echo var_export($e, true);
+				}
+				else{
+					$result = $stmt->fetch(PDO::FETCH_ASSOC);
+					if ($result){
+						 if($_SESSION["user"]["role"] = "admin")
+							 echo "You're an admin</div>";
+					}
+				}
+				else{
+						echo "Youre logged in</div>";
+					}
+						 
+			}
             //end get tanks
 
             die(header("Location: " . Common::url_for("surveys")));
