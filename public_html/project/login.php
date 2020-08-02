@@ -33,24 +33,24 @@ if (Common::get($_POST, "submit", false)){
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
-      
+       /*
             $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
                 if($role = "admin") {
-                 /* $result = DBH::create_questionnaire(Common::get_user_id());
+                 $result = DBH::create_questionnaire(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
                         $result = DBH::get_roles(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
                             $role = Common::get($result, "data", []);
                         }
 					
-                    }*/
+                    
                $_SESSION["user"]["role"] == "admin";
 			   }
              
            //  $_SESSION["user"]["role"] == "admin";
-            }
+            }}*/
             //end get tanks
 			$_SESSION["user"]["role"] == "admin";
             die(header("Location: " . Common::url_for("surveys")));
