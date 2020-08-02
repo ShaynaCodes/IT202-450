@@ -33,19 +33,16 @@ if (Common::get($_POST, "submit", false)){
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
-            //end system user fetch
-            //get user tank(s) and store in session, not necessary but saves extra DB calls later
+      
             $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
-                if(count($role) == 0) {
-                    //this section is needed to give any previously existing users a tank that didn't have a tank before
-                    //this feature was created/added
+                if($role == "admin") {
                     $result = DBH::create_questionnaire(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
                         $result = DBH::get_roles(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
-                            $surveys = Common::get($result, "data", []);
+                            $role = Common::get($result, "data", []);
                         }
                     }
                 }
