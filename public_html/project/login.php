@@ -45,13 +45,13 @@ if (Common::get($_POST, "submit", false)){
                             $role = Common::get($result, "data", []);
                         }
                     }
-                $_SESSION["user"]["role"] = "admin";
+              //  $_SESSION["user"]["role"] = "admin";
 			   }
              
-               // $_SESSION["user"]["role"] = "admin";
+             $_SESSION["user"]["role"] == "admin";
             }
             //end get tanks
-		
+			//$_SESSION["user"]["role"] == "admin";
             die(header("Location: " . Common::url_for("surveys")));
         }
         else{
