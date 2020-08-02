@@ -37,14 +37,14 @@ if (Common::get($_POST, "submit", false)){
             $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
-                if($role == "admin") {
-                  /*  $result = DBH::create_questionnaire(Common::get_user_id());
+                if($role = "admin") {
+                  $result = DBH::create_questionnaire(Common::get_user_id());
                     if (Common::get($result, "status", 400) == 200) {
                         $result = DBH::get_roles(Common::get_user_id());
                         if (Common::get($result, "status", 400) == 200) {
                             $role = Common::get($result, "data", []);
                         }
-                    }*/
+                    }
                 $_SESSION["user"]["role"] = "admin";
 			   }
              
