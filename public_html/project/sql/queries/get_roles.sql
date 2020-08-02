@@ -1,1 +1,1 @@
-SELECT * FROM Users where role = :role LIMIT 1
+SELECT role FROM Users Limit 1;
