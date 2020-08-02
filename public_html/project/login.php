@@ -34,7 +34,7 @@ if (Common::get($_POST, "submit", false)){
                 error_log("Got system_id " . $_SESSION["system_id"]);
             }
       
-            $result = DBH::get_roles(Common::get_user_id());
+         /*  $result = DBH::get_roles(Common::get_user_id());
             if(Common::get($result, "status", 400) == 200){
                 $role = Common::get($result, "data", []);
                 if($role == "admin") {
@@ -46,30 +46,10 @@ if (Common::get($_POST, "submit", false)){
                         }
                     }
                 }
-			require("config.php");
-				$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
-			try{
-				$db = new PDO($connection_string, $dbuser, $dbpass);
-				$stmt = $db->prepare("SELECT * FROM Users where role = :role LIMIT 1");
-				$stmt->execute(array(
-					":role" => $role
-				));
-				$e = $stmt->errorInfo();
-				if($e[0] != "00000"){
-					echo var_export($e, true);
-				}
-				else{
-					$result = $stmt->fetch(PDO::FETCH_ASSOC);
-					if ($result){
-						 if($_SESSION["user"]["role"] = "admin")
-							 echo "You're an admin</div>";
-					}
-				}
-				else{
-						echo "Youre logged in</div>";
-					}
-						 
 			}
+			$result = DBH::get_roles(Common::get_user_id());
+			
+			}*/
             //end get tanks
 
             die(header("Location: " . Common::url_for("surveys")));
@@ -79,9 +59,10 @@ if (Common::get($_POST, "submit", false)){
             die(header("Location: " . Common::url_for("login")));
         }
     }
+	}
     else{
         Common::flash("Email and password must not be empty", "warning");
         die(header("Location: " . Common::url_for("login")));
     }
-}
+
 ?>
