@@ -48,8 +48,8 @@ if (Common::get($_POST, "submit", false)){
                 }
 			}
 			$result = DBH::get_roles(Common::get_user_id());
-			
-			}*/
+			*/
+			}
             //end get tanks
 
             die(header("Location: " . Common::url_for("surveys")));
@@ -59,7 +59,6 @@ if (Common::get($_POST, "submit", false)){
             die(header("Location: " . Common::url_for("login")));
         }
     }
-	}
     else{
         Common::flash("Email and password must not be empty", "warning");
         die(header("Location: " . Common::url_for("login")));
