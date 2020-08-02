@@ -20,9 +20,10 @@ if(Common::is_logged_in()) {
         }
     }
 }
+?>
 <div class="container-fluid">
-<h3><?php echo Common::get($questionnaire, "name", "");?></h3>
-<h5><?php echo Common::get($questionnaire, "description", "");?></h5>
+<h3><?php echo Common::get($survey, "name", "");?></h3>
+<h5><?php echo Common::get($survey, "description", "");?></h5>
 <div class="list-group">
     <div class="list-group-item">
     <?php foreach($stats as $question):?>
