@@ -1,1 +1,0 @@
-SELECT * FROM Users where id = :id LIMIT 1

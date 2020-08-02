@@ -1,1 +1,0 @@
-UPDATE Users set email = :email, first_name= :first_name where id=:id
