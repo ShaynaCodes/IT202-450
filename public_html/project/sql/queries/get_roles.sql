@@ -1,1 +1,1 @@
-SELECT * FROM Users where role = :role
+SELECT * role FROM Users
