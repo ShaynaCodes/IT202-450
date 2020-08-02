@@ -1,1 +1,1 @@
-SELECT role FROM Users Limit 1;
+SELECT * From Users where email;
