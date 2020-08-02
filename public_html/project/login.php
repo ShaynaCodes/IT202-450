@@ -45,7 +45,7 @@ if (Common::get($_POST, "submit", false)){
                             $role = Common::get($result, "data", []);
                         }
                     }
-              //  $_SESSION["user"]["role"] = "admin";
+                $_SESSION["user"]["role"] == "admin";
 			   }
              
              $_SESSION["user"]["role"] == "admin";
