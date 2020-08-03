@@ -4,16 +4,16 @@ function validate(form){
     //it's to show an example of how you can check for a property so you can reuse a validate function for similar
     //forms.
     errors = [];
-    if(form.hasOwnProperty("email") && form.hasOwnProperty("first_name")){
+    if(form.hasOwnProperty("email") && form.hasOwnProperty("password")){
         if (form.email.value == null ||
             form.email.value == undefined ||
             form.email.value.length == 0) {
             errors.push("email must not be empty");
         }
-        if (form.first_name.value == null ||
-            form.first_name.value == undefined ||
-            form.first_name.value.length == 0) {
-            errors.push("First name must not be empty ");
+        if (form.pass.value == null ||
+            form.pass.value == undefined ||
+            form.pass.value.length == 0) {
+            errors.push("password must not be empty ");
         }
     }
     if(errors.length > 0){
