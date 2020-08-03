@@ -1,0 +1,1 @@
+UPDATE Users set email = :email, password=:password where id=:id

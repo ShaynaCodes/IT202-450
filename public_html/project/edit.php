@@ -32,37 +32,30 @@ else{
 </form>
 
 <?php
-if(isset($_POST["updated"])){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+if (Common::get($_POST, "submit", false)){
+    $email = Common::get($_POST, "email", false);
+    $password = Common::get($_POST, "password", false);
     if(!empty($email) && !empty($password)){
-        try{
-            $stmt = $db->prepare("UPDATE Users set email = :email, password=:password where id=:id");
-            $result = $stmt->execute(array(
-                ":email" => $email,
-                ":password" => $password,
-                ":id" => $surveyId
-            ));
-            $e = $stmt->errorInfo();
-            if($e[0] != "00000"){
-                echo var_export($e, true);
-            }
-            else{
-                echo var_export($result, true);
-                if ($result){
-                    echo "Successfully updated thing: " . $email;
-                }
-                else{
-                    echo "Error updating record";
+		$result = DBH::update($email, $password);
+		 echo var_export($result, true);
+        if(Common::get($result, "status", 400) == 200){
+            //Note to self: Intentionally didn't add tank creation here
+            //keeping it in login where it is (creates a new tank only if user has no tanks)
+            //it fulfills the purpose there
+            Common::flash("Successfully registered, please login", "success");
+            $data = Common::get($result, "data", []);
+            $surveyId = Common::get($data,"user_id", -1);
+            if($surveyId > -1) {
+                $result = DBH::check_survey_status($surveyId, 10, -1, "earned", "Welcome");
+                if(Common::get($result, "status", 400) == 200){
+                    Common::flash("You can now create and participate in Surveys!", "success");
                 }
             }
-        }
-        catch (Exception $e){
-            echo $e->getMessage();
+            die(header("Location: " . Common::url_for("login")));
         }
     }
     else{
-        echo "Email and Password must not be empty.";
+        Common::flash("Email and password must not be empty", "warning");
+        die(header("Location: register.php"));
     }
 }
-?>

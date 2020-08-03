@@ -80,6 +80,23 @@ class DBH{
                 return DBH::response(NULL, 400, "Registration unsuccessful");
             }
         }
+	}
+		public static function update($email, $pass){
+			try{
+				 $query = file_get_contents(__DIR__ . "/../sql/queries/update.sql");
+				  $stmt = DBH::getDB()->prepare($query);
+				 $pass = password_hash($pass, PASSWORD_BCRYPT);
+            $result = $stmt->execute([":email" => $email, ":password" => $pass]);
+            DBH::verify_sql($stmt);
+            if($result){
+                $id = DBH::getDB()->lastInsertId();
+                return DBH::response(["user_id"=>$id],200, "Update successful");
+            }
+            else{
+                return DBH::response(NULL, 400, "Update unsuccessful");
+            }
+			}
+		}
         catch(Exception $e){
             error_log($e->getMessage());
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
