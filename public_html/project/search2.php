@@ -46,7 +46,7 @@ if(isset($search)) {
         else if($col == "modified"){
             $mapped_col = "modified";
         }
-        $query = "SELECT * FROM Questionnaires where name like CONCAT('%', :questionnaires, '%') ORDER BY $mapped_col";
+        $query = "SELECT * FROM Questionnaires where name like CONCAT('%', :questionnaire, '%') ORDER BY $mapped_col";
         //same as above, safely map data from client to hard coded value to prevent sql injection
         if((int)$order == 1){
             $query .= " ASC";
@@ -57,7 +57,7 @@ if(isset($search)) {
 
         $stmt = getDB()->prepare($query);
         //Note: With a LIKE query, we must pass the % during the mapping
-        $stmt->execute([":questionnaires"=>$search]);
+        $stmt->execute([":questionnaire"=>$search]);
         echo var_export($stmt->errorInfo());
         //Note the fetchAll(), we need to use it over fetch() if we expect >1 record
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
