@@ -6,6 +6,7 @@ if(Common::is_logged_in()){
 }
 //TODO: Note, internally calling them questionnaires (and for admin), user facing they're called surveys.
 $response = DBH::get_available_surveys();
+$user= DBH::getget_system_user_id();
 $available = [];
 if(Common::get($response, "status", 400) == 200){
     $available = Common::get($response, "data", []);
@@ -16,6 +17,7 @@ if(Common::get($response, "status", 400) == 200){
     <div class="list-group">
         <?php foreach($available as $s): ?>
             <div class="list-group-item">
+			<?php echo "Made by " .$_SESSION["user"]["email"];?>
                 <h6><?php echo Common::get($s, "name", ""); ?></h6>
                 <p><?php echo Common::get($s, "description", ""); ?></p>
                 <?php if(Common::get($s, "use_max", false)): ?>
