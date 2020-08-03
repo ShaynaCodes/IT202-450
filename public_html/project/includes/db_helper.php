@@ -49,9 +49,9 @@ class DBH{
                     $stmt = DBH::getDB()->prepare($query);
                     $stmt->execute([":user_id"=>$user["id"]]);
                     DBH::verify_sql($stmt);
-                    $_role = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    error_log(var_export($_role, true));
-                    $user["role"] = $_role;
+                    $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    error_log(var_export($roles, true));
+                    $user["roles"] = $roles;
                     return DBH::response($user);
                 } else {
                     return DBH::response(NULL, 403, "Invalid email or password");
@@ -91,8 +91,8 @@ class DBH{
 				 $query = file_get_contents(__DIR__ . "/../sql/queries/update.sql");
 				  $stmt = DBH::getDB()->prepare($query);
 				 $pass = password_hash($pass, PASSWORD_BCRYPT);
-            $result = $stmt->execute([":email" => $email, ":password" => $pass]);
-            DBH::verify_sql($stmt);
+				$result = $stmt->execute([":email" => $email, ":password" => $pass]);
+				DBH::verify_sql($stmt);
             if($result){
                 $id = DBH::getDB()->lastInsertId();
                 return DBH::response(["user_id"=>$id],200, "Update successful");

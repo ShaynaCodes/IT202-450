@@ -131,11 +131,15 @@ class Common {
      * @param $role
      * @return bool
      */
-    public static function has_role($role){
+  public static function has_role($role){
         $user = Common::get($_SESSION, "user", false);
         if($user){
-            $_role = Common::get($user, "role",[]);
-            return $_role ==$role;
+            $roles = Common::get($user, "roles", []);
+            foreach($roles as $r){
+                if($r["name"] == $role){
+                    return true;
+                }
+            }
         }
         return false;
     }
