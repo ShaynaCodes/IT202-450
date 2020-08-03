@@ -46,7 +46,7 @@ if(isset($search)) {
         else if($col == "modified"){
             $mapped_col = "modified";
         }
-        $query = file_get_contents(__DIR__ . "/sql/queries/SEARCH_TABLE_SURVEY.sql");
+        $query = "SELECT * FROM Questionnaires where name like CONCAT('%', :questionnaires, '%') ORDER BY $mapped_col";
         //same as above, safely map data from client to hard coded value to prevent sql injection
         if((int)$order == 1){
             $query .= " ASC";
