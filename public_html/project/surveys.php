@@ -6,10 +6,14 @@ if(Common::is_logged_in()){
 }
 //TODO: Note, internally calling them questionnaires (and for admin), user facing they're called surveys.
 $response = DBH::get_available_surveys();
-$user= DBH::getget_system_user_id();
+$user= DBH::get_system_user_id();
 $available = [];
+$get=[];
 if(Common::get($response, "status", 400) == 200){
     $available = Common::get($response, "data", []);
+}
+if(Common::get($user, "status", 400) == 200){
+    $get = Common::get($user, "data", []);
 }
 ?>
 <div class="container-fluid">
@@ -17,7 +21,6 @@ if(Common::get($response, "status", 400) == 200){
     <div class="list-group">
         <?php foreach($available as $s): ?>
             <div class="list-group-item">
-			<?php echo "Made by " .$_SESSION["user"]["email"];?>
                 <h6><?php echo Common::get($s, "name", ""); ?></h6>
                 <p><?php echo Common::get($s, "description", ""); ?></p>
                 <?php if(Common::get($s, "use_max", false)): ?>
@@ -31,6 +34,11 @@ if(Common::get($response, "status", 400) == 200){
                 <a href="results.php?survey_id=<?php echo Common::get($s, 'id', -1);?>" class="btn btn-secondary">Results</a>
             </div>
         <?php endforeach; ?>
+		<?php foreach($get as $s): ?>
+		 <div class="list-group-item">
+		  <h6><?php echo Common::get($s, "email", ""); ?></h6>
+		  </div>
+		   <?php endforeach; ?>
         <?php if(count($available) == 0):?>
             <div class="list-group-item">
                 No surveys available, please check back later.
