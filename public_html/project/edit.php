@@ -82,6 +82,8 @@ else{
 <script src="js/script.js"></script>
 <!-- note although <script> tag "can" be self terminating some browsers require the
 full closing tag-->
+ <div class="container-fluid">
+        <h4>Update Email and Password</h4>
 <form method="POST"onsubmit="return validate(this);">
 <label for="email">Email:
     <!-- since the last assignment we added a required attribute to the form elements-->
