@@ -1,3 +1,4 @@
+
 <?php
 $search = "";
 if(isset($_POST["search"])){
@@ -5,44 +6,43 @@ if(isset($_POST["search"])){
 }
 ?>
 <form method="POST">
-    <input type="text" name="search" placeholder="Search for question"
+    <input type="text" name="search" placeholder="Search for Question"
     value="<?php echo $search;?>"/>
     <input type="submit" value="Search"/>
 </form>
 <?php
 if(isset($search)) {
-	$response = DBH::get_full_questionnaire_id();
-	$available = [];
-	if(Common::get($response, "status", 400) == 200){
-		$available = Common::get($response, "data", []);
-	}
+
+    require("common.inc.php");
+    $query = file_get_contents(__DIR__ . "/sql/queries/SEARCH_TABLE_SURVEY.sql");
+    if (isset($query) && !empty($query)) {
+        try {
+            $stmt = getDB()->prepare($query);
+            //Note: With a LIKE query, we must pass the % during the mapping
+            $stmt->execute([":survey"=>$search]);
+            //Note the fetchAll(), we need to use it over fetch() if we expect >1 record
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }
 ?>
 <!--This part will introduce us to PHP templating,
 note the structure and the ":" -->
 <!-- note how we must close each check we're doing as well-->
-<div class="container-fluid">
-    <h4>Surveys</h4>
-    <div class="list-group">
-        <?php foreach($available as $s): ?>
-            <div class="list-group-item">
-                <h6><?php echo Common::get($s, "name", ""); ?></h6>
-                <p><?php echo Common::get($s, "description", ""); ?></p>
-                <?php if(Common::get($s, "use_max", false)): ?>
-                    <div>Max Attempts: <?php echo Common::get($s, "max_attempts", 0);?></div>
-                <?php else:?>
-                    <div>Daily Attempts: <?php echo Common::get($s, "attempts_per_day", 0);?></div>
-                <?php endif; ?>
-                <?php if(Common::get($s, "available", 0) == 1):?>
-                <a href="survey.php?s=<?php echo Common::get($s, 'id', -1);?>" class="btn btn-secondary">Participate</a>
-                <?php endif;?>
-                <a href="results.php?survey_id=<?php echo Common::get($s, 'id', -1);?>" class="btn btn-secondary">Results</a>
-            </div>
-        <?php endforeach; ?>
-        <?php if(count($available) == 0):?>
-            <div class="list-group-item">
-                No surveys available, please check back later.
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
+<?php if(isset($results) && count($results) > 0):?>
+    <p>This shows when we have results</p>
+    <ul>
+        <!-- Here we'll loop over all our results and reuse a specific template for each iteration,
+        we're also using our helper function to safely return a value based on our key/column name.-->
+        <?php foreach($results as $row):?>
+            <li>
+                <?php echo get($row, "name")?>
+                <a href="surveys.php?id=<?php echo get($row, "id");?>">Surveys</a>
+            </li>
+        <?php endforeach;?>
+    </ul>
+<?php else:?>
+    <p>This shows when we don't have results</p>
+<?php endif;?>
