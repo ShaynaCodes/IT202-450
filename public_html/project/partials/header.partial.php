@@ -27,7 +27,7 @@ $logged_in = Common::is_logged_in(false);
             <a class="nav-link" href="<?php echo Common::url_for("edit");?>">Edit Profile</a>
         </li>
 		<li class="nav-item">
-            <a class="nav-link" href="<?php echo Common::url_for("create_questionnaire");?>">Make Questionnaire</a>
+            <a class="nav-link" href="<?php echo Common::url_for("make_questionnaire");?>">Make Questionnaire</a>
         </li>
         <?php if (Common::has_role("admin")):?>
         <li class="nav-item">
