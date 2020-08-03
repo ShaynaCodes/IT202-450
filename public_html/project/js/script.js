@@ -10,9 +10,9 @@ function validate(form){
             form.email.value.length == 0) {
             errors.push("email must not be empty");
         }
-        if (form.pass.value == null ||
-            form.pass.value == undefined ||
-            form.pass.value.length == 0) {
+        if (form.password.value == null ||
+            form.password.value == undefined ||
+            form.password.value.length == 0) {
             errors.push("password must not be empty ");
         }
     }
