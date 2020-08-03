@@ -11,26 +11,11 @@ if(isset($_POST["search"])){
 </form>
 <?php
 if(isset($search)) {
-
-    require("common.inc.php");
-   /$query = file_get_contents(__DIR__ . "/sql/queries/SEARCH_TABLE_QUESTION.sql");
-    if (isset($query) && !empty($query)) {
-        try {
-            $stmt = getDB()->prepare($query);
-            //Note: With a LIKE query, we must pass the % during the mapping
-            $stmt->execute([":question"=>$search]);
-            //Note the fetchAll(), we need to use it over fetch() if we expect >1 record
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-	$response = DBH::get_available_surveys();
-$available = [];
-if(Common::get($response, "status", 400) == 200){
-    $available = Common::get($response, "data", []);
-}
-
+	$response = DBH::get_full_questionnaire_id();
+	$available = [];
+	if(Common::get($response, "status", 400) == 200){
+		$available = Common::get($response, "data", []);
+	}
 }
 ?>
 <!--This part will introduce us to PHP templating,
