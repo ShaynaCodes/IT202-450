@@ -1,4 +1,11 @@
 <?php
+include_once(__DIR__."/partials/header.partial.php");
+
+if(Common::is_logged_in()){
+    //this will auto redirect if user isn't logged in
+}
+?>
+<?php
 $search = "";
 if(isset($_POST["search"])){
     $search = $_POST["search"];
