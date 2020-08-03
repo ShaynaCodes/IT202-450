@@ -106,11 +106,7 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
 		}
-        catch(Exception $e){
-            error_log($e->getMessage());
-            return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
-        }
-    }
+ 
     public static function get_system_user_id(){
         try {
             $query = file_get_contents(__DIR__ . "/../sql/queries/login.sql");
