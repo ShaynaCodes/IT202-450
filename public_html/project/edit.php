@@ -85,16 +85,19 @@ full closing tag-->
  <div class="container-fluid">
         <h4>Update Email and Password</h4>
 <form method="POST"onsubmit="return validate(this);">
-<label for="email">Email:
+<div>
+<label for="email">Email:</label>
     <!-- since the last assignment we added a required attribute to the form elements-->
     <input type="email" id="email" name="email" value="<?php echo get($result, "email");?>"/>
-</label>
-<label for="password">Password:
+</div>
+<div>
+<label for="password">Password:</label>
     <!-- We also added a minimum value for our number field-->
     <input type="password" id="password" name="password" value="<?php echo get($result, "password");?>"/>
-</label>
+</div>
 <input type="submit" name="updated" value="Update Users"/>
 </form>
+ </div>
 <?php
 /*
 if (Common::get($_POST, "submit", false)){
