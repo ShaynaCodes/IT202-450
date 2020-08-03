@@ -12,7 +12,7 @@ include_once(__DIR__."/partials/header.partial.php");
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required min="3"/>
             </div>
-            <input type="submit" name="submit" value="Register"/>
+            <input type="submit" name="submit" value="update"/>
         </form>
     </div>
 <?php
@@ -29,12 +29,12 @@ if (Common::get($_POST, "submit", false)){
             Common::flash("Successfully Updated, please login", "success");
             $data = Common::get($result, "data", []);
             $id = Common::get($data,"user_id", -1);
-            if($id > -1) {
+            /*if($id > -1) {
                 $result = DBH::changePoints($id, 10, -1, "earned", "Welcome bonus");
                 if(Common::get($result, "status", 400) == 200){
                     Common::flash("Here's 10 free points for the shop to start you off!", "success");
                 }
-            }
+            }*/
             die(header("Location: " . Common::url_for("login")));
         }
     }

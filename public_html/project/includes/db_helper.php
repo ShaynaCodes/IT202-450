@@ -101,7 +101,7 @@ class DBH{
                 return DBH::response(NULL, 400, "Update unsuccessful");
             }
 			}
-			catch(Exception $e){
+		catch(Exception $e){
             error_log($e->getMessage());
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
