@@ -1,0 +1,1 @@
+DELETE FROM Questionnaires WHERE id = :id
