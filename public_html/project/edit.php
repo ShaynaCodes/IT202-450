@@ -1,68 +1,45 @@
 <?php
-require("config.php");
-$connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
-$db = new PDO($connection_string, $dbuser, $dbpass);
-$surveyId = -1;
-$result = array();
-function get($arr, $key){
-    if(isset($arr[$key])){
-        return $arr[$key];
-    }
-    return "";
-}
-if(isset($_GET["surveyId"])){
-    $thingId = $_GET["surveyId"];
-    $stmt = $db->prepare("SELECT * FROM Users where id = :id");
-    $stmt->execute([":id"=>$surveyId]);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-}
-else{
-    echo "No surveyId provided in url, don't forget this or sample won't work.";
-}
+include_once(__DIR__."/partials/header.partial.php");
 ?>
-
-<form method="POST">
-	<label for="survey">Email:
-	<input type="email" id="email" name="email" value="<?php echo get($result, "email");?>" />
-	</label>
-	<label for="q">Password
-	<input type="password" id="password" name="password" value="<?php echo get($result, "password");?>" />
-	</label>
-	<input type="submit" name="updated" value="Update Survey"/>
-</form>
-
+    <div class="container-fluid">
+        <h4>Update</h4>
+        <form method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required min="3"/>
+            </div>
+            <input type="submit" name="submit" value="Register"/>
+        </form>
+    </div>
 <?php
-if(isset($_POST["updated"])){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+if (Common::get($_POST, "submit", false)){
+    $email = Common::get($_POST, "email", false);
+    $password = Common::get($_POST, "password", false)
     if(!empty($email) && !empty($password)){
-        try{
-            $stmt = $db->prepare("UPDATE Users set email = :email, password=:password where id=:id");
-            $result = $stmt->execute(array(
-                ":email" => $email,
-                ":password" => $password,
-                ":id" => $surveyId
-            ));
-            $e = $stmt->errorInfo();
-            if($e[0] != "00000"){
-                echo var_export($e, true);
-            }
-            else{
-                echo var_export($result, true);
-                if ($result){
-                    echo "Successfully updated users: " . $email;
-                }
-                else{
-                    echo "Error updating record";
+        $result = DBH::update($email, $password);
+        echo var_export($result, true);
+        if(Common::get($result, "status", 400) == 200){
+            //Note to self: Intentionally didn't add tank creation here
+            //keeping it in login where it is (creates a new tank only if user has no tanks)
+            //it fulfills the purpose there
+            Common::flash("Successfully Updated, please login", "success");
+            $data = Common::get($result, "data", []);
+            $id = Common::get($data,"user_id", -1);
+            if($id > -1) {
+                $result = DBH::changePoints($id, 10, -1, "earned", "Welcome bonus");
+                if(Common::get($result, "status", 400) == 200){
+                    Common::flash("Here's 10 free points for the shop to start you off!", "success");
                 }
             }
-        }
-        catch (Exception $e){
-            echo $e->getMessage();
+            die(header("Location: " . Common::url_for("login")));
         }
     }
     else{
-        echo "email and password must not be empty.";
+        Common::flash("Email and password must not be empty", "warning");
+        die(header("Location: register.php"));
     }
 }
-?>
