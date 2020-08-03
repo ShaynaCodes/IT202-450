@@ -10,14 +10,14 @@ if(Common::is_logged_in()) {
             error_log(var_export($stats, true));
         }
         //not really necessary if the above call is crafted well, but got lazy here
-        $result = DBH::get_questionnaire_by_id($survey_id);
+       /* $result = DBH::get_questionnaire_by_id($survey_id);
         if(Common::get($result, "status", 400) == 200){
             $survey = Common::get($result, "data", []);
             if(count($survey) == 1){
                 $survey = $survey[0];
             }
             error_log(var_export($survey, true));
-        }
+        }*/
     }
 }
 ?>
