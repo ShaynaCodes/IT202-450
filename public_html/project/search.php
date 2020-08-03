@@ -13,7 +13,7 @@ if(isset($_POST["search"])){
 if(isset($search)) {
 
     require("common.inc.php");
-   /* $query = file_get_contents(__DIR__ . "/sql/queries/SEARCH_TABLE_QUESTION.sql");
+   /$query = file_get_contents(__DIR__ . "/sql/queries/SEARCH_TABLE_QUESTION.sql");
     if (isset($query) && !empty($query)) {
         try {
             $stmt = getDB()->prepare($query);
@@ -24,7 +24,7 @@ if(isset($search)) {
         } catch (Exception $e) {
             echo $e->getMessage();
         }
-    }*/
+    }
 	$response = DBH::get_available_surveys();
 $available = [];
 if(Common::get($response, "status", 400) == 200){
