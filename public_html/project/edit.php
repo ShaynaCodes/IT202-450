@@ -21,16 +21,20 @@ else{
 }*/
 ?>
 
-<form method="POST">
-	<label for="email">Email:
-	<input type="email" id="email" name="email" value="<?php echo get($result, "email");?>" />
-	</label>
-	<label for="password">Password:
-	<input type="password" id="password" name="password" value="<?php echo get($result, "password");?>" />
-	</label>
-	<input type="submit" name="updated" value="Update Users"/>
-</form>
-
+  <div class="container-fluid">
+        <h4>Update Account</h4>
+        <form method="POST">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required min="3"/>
+            </div>
+            <input type="submit" name="submit" value="Update"/>
+        </form>
+    </div>
 <?php
 if (Common::get($_POST, "submit", false)){
     $email = Common::get($_POST, "email", false);
