@@ -27,7 +27,7 @@ if (Common::get($_POST, "submit", false)){
 
             //fetch system user id and put it in session to reduce DB calls to fetch it when we need
             //to generate points from activity on the app
-            $result = DBH::get_system_user_id();
+           /* $result = DBH::get_system_user_id();
             $result = Common::get($result, "data", false);
             if($result) {
                 $_SESSION["system_id"] = Common::get($result, "id", -1);
