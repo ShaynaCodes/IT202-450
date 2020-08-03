@@ -49,7 +49,7 @@ class DBH{
                     $stmt = DBH::getDB()->prepare($query);
                     $stmt->execute([":user_id"=>$user["id"]]);
                     DBH::verify_sql($stmt);
-                    $role = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $_role = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     error_log(var_export($_role, true));
                     $user["role"] = $_role;
                     return DBH::response($user);

@@ -24,7 +24,7 @@ if (Common::get($_POST, "submit", false)){
         echo var_export($result, true);
         if(Common::get($result, "status", 400) == 200){
             $_SESSION["user"] = Common::get($result, "data", NULL);
-			Common::has_role($role);
+			
             die(header("Location: " . Common::url_for("surveys")));
         }
         else{
