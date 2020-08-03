@@ -1,1 +1,1 @@
-SELECT * FROM Questionnaires where name like CONCAT('%', :name, '%')
+SELECT * FROM Questionnaires where name like CONCAT('%', :name, '%') ORDER BY $mapped_col";
