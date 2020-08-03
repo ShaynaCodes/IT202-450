@@ -65,7 +65,7 @@ class DBH{
             return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
         }
     }
-    public static function register($email, $pass){
+     public static function register($email, $pass){
         try {
             $query = file_get_contents(__DIR__ . "/../sql/queries/register.sql");
             $stmt = DBH::getDB()->prepare($query);
@@ -80,7 +80,12 @@ class DBH{
                 return DBH::response(NULL, 400, "Registration unsuccessful");
             }
         }
-	}
+        catch(Exception $e){
+            error_log($e->getMessage());
+            return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
+        }
+    }
+
 		public static function update($email, $pass){
 			try{
 				 $query = file_get_contents(__DIR__ . "/../sql/queries/update.sql");
@@ -96,6 +101,10 @@ class DBH{
                 return DBH::response(NULL, 400, "Update unsuccessful");
             }
 			}
+			catch(Exception $e){
+            error_log($e->getMessage());
+            return DBH::response(NULL, 400, "DB Error: " . $e->getMessage());
+        }
 		}
         catch(Exception $e){
             error_log($e->getMessage());
