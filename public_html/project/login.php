@@ -42,6 +42,7 @@ if (Common::get($_POST, "submit", false)){
 					$_SESSION["user"]["role"] == "admin";
 				}	
 			}*/
+			$_SESSION["user"]["role"];
 			$_SESSION["user"]["role"] == "admin";
             die(header("Location: " . Common::url_for("surveys")));
         }
