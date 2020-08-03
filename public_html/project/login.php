@@ -24,15 +24,6 @@ if (Common::get($_POST, "submit", false)){
         echo var_export($result, true);
         if(Common::get($result, "status", 400) == 200){
             $_SESSION["user"] = Common::get($result, "data", NULL);
-			 $result = DBH::get_roles(Common::get_user_id());
-			 if(Common::get($result, "status", 400) == 200){
-                $roles = Common::get($result, "data", []);
-                if(($roles) == "admin") {
-                    //this section is needed to give any previously existing users a tank that didn't have a tank before
-                    //this feature was created/added
-					$_SESSION["user"]["roles"] = $roles;
-                        }
-                    }
             die(header("Location: " . Common::url_for("surveys")));
         }
         else{

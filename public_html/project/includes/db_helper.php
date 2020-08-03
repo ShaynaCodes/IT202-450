@@ -49,9 +49,9 @@ class DBH{
                     $stmt = DBH::getDB()->prepare($query);
                     $stmt->execute([":user_id"=>$user["id"]]);
                     DBH::verify_sql($stmt);
-                    $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    error_log(var_export($roles, true));
-                    $user["roles"] = $roles;
+                    $_role = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    error_log(var_export($_role, true));
+                    $user["_role"] = $_role;
                     return DBH::response($user);
                 } else {
                     return DBH::response(NULL, 403, "Invalid email or password");

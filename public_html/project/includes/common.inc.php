@@ -134,13 +134,9 @@ class Common {
   public static function has_role($role){
         $user = Common::get($_SESSION, "user", false);
         if($user){
-            $roles = Common::get($user, "roles", []);
-            foreach($roles as $r){
-                if($r["name"] == $role){
-                    return true;
-                }
+             $_role = Common::get($user, "role",[]);
+            return $_role == $role;
             }
-        }
         return false;
     }
     /*** Attempts to safely retrieve a key from an array, otherwise returns the default
