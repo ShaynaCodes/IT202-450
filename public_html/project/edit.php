@@ -82,7 +82,7 @@ else{
 <script src="js/script.js"></script>
 <!-- note although <script> tag "can" be self terminating some browsers require the
 full closing tag-->
- <div class="container-fluid">
+ 
         <h4>Update Email and Password</h4>
 <form method="POST"onsubmit="return validate(this);">
 <div>
@@ -97,7 +97,6 @@ full closing tag-->
 </div>
 <input type="submit" name="updated" value="Update Users"/>
 </form>
- </div>
 <?php
 /*
 if (Common::get($_POST, "submit", false)){
